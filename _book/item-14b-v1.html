@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SMRT</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="SMRT" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="SMRT" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Chris Foster">
+
+
+<meta name="date" content="2018-09-13">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="item-10b-v1.html">
+<link rel="next" href="remove-correct-response.html">
+<script src="assets/jquery-2.2.3/jquery.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html"><i class="fa fa-check"></i><b>2</b> Introduction to Smart Items</a><ul>
+<li class="chapter" data-level="2.1" data-path="purpose-of-building-smart-items.html"><a href="purpose-of-building-smart-items.html"><i class="fa fa-check"></i><b>2.1</b> Purpose of Building Smart Items</a></li>
+<li class="chapter" data-level="2.2" data-path="smart-item-logic.html"><a href="smart-item-logic.html"><i class="fa fa-check"></i><b>2.2</b> Smart Item Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html"><i class="fa fa-check"></i><b>3</b> DOMC Difficulty Variance</a><ul>
+<li class="chapter" data-level="3.1" data-path="initial-run.html"><a href="initial-run.html"><i class="fa fa-check"></i><b>3.1</b> Initial Run</a></li>
+<li class="chapter" data-level="3.2" data-path="item-10b-v1.html"><a href="item-10b-v1.html"><i class="fa fa-check"></i><b>3.2</b> Item 10B_v1</a></li>
+<li class="chapter" data-level="3.3" data-path="item-14b-v1.html"><a href="item-14b-v1.html"><i class="fa fa-check"></i><b>3.3</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="item-14b-v1.html"><a href="item-14b-v1.html#histogram"><i class="fa fa-check"></i><b>3.3.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="remove-correct-response.html"><a href="remove-correct-response.html"><i class="fa fa-check"></i><b>3.4</b> Remove correct response</a></li>
+<li class="chapter" data-level="3.5" data-path="item-10b-v1-1.html"><a href="item-10b-v1-1.html"><i class="fa fa-check"></i><b>3.5</b> Item 10B_v1</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="item-10b-v1-1.html"><a href="item-10b-v1-1.html#histogram-1"><i class="fa fa-check"></i><b>3.5.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="item-14b-v1-1.html"><a href="item-14b-v1-1.html"><i class="fa fa-check"></i><b>3.6</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="item-14b-v1-1.html"><a href="item-14b-v1-1.html#histogram-2"><i class="fa fa-check"></i><b>3.6.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="all-item-plots.html"><a href="all-item-plots.html"><i class="fa fa-check"></i><b>3.7</b> All Item Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>4</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="5" data-path="level-1.html"><a href="level-1.html"><i class="fa fa-check"></i><b>5</b> Level 1</a><ul>
+<li class="chapter" data-level="5.1" data-path="level-2.html"><a href="level-2.html"><i class="fa fa-check"></i><b>5.1</b> Level 2</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="level-2.html"><a href="level-2.html#level-3"><i class="fa fa-check"></i><b>5.1.1</b> Level 3</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="including-plots.html"><a href="including-plots.html"><i class="fa fa-check"></i><b>5.2</b> Including Plots</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SMRT</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="item-14b_v1" class="section level2">
+<h2><span class="header-section-number">3.3</span> Item 14b_v1</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fourteenb_v1 =<span class="st"> </span>hp_items <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(item_id <span class="op">==</span><span class="st"> &#39;14B_v1&#39;</span>)
+<span class="kw">kable</span>(fourteenb_v1, <span class="dt">format =</span> <span class="st">&quot;markdown&quot;</span>)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left">item_id</th>
+<th align="left">order</th>
+<th align="right">p_value</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">0</td>
+<td align="right">0.4235294</td>
+<td align="right">170</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">01</td>
+<td align="right">0.2765957</td>
+<td align="right">47</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">012</td>
+<td align="right">0.3636364</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">0123</td>
+<td align="right">0.2941176</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">01234</td>
+<td align="right">0.7049180</td>
+<td align="right">61</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">0124</td>
+<td align="right">0.7500000</td>
+<td align="right">12</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">013</td>
+<td align="right">0.5652174</td>
+<td align="right">23</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">0134</td>
+<td align="right">0.5666667</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">014</td>
+<td align="right">0.4583333</td>
+<td align="right">24</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">02</td>
+<td align="right">0.5263158</td>
+<td align="right">19</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">023</td>
+<td align="right">0.7500000</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">0234</td>
+<td align="right">0.4545455</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">024</td>
+<td align="right">0.6470588</td>
+<td align="right">17</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">03</td>
+<td align="right">0.4181818</td>
+<td align="right">55</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">034</td>
+<td align="right">0.5555556</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">04</td>
+<td align="right">0.4333333</td>
+<td align="right">30</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">1</td>
+<td align="right">0.0000000</td>
+<td align="right">39</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">12</td>
+<td align="right">0.0000000</td>
+<td align="right">23</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">123</td>
+<td align="right">0.0000000</td>
+<td align="right">22</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">1234</td>
+<td align="right">0.0000000</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">124</td>
+<td align="right">0.0000000</td>
+<td align="right">19</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">13</td>
+<td align="right">0.0000000</td>
+<td align="right">8</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">134</td>
+<td align="right">0.0000000</td>
+<td align="right">11</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">14</td>
+<td align="right">0.0000000</td>
+<td align="right">9</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">2</td>
+<td align="right">0.0000000</td>
+<td align="right">129</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">23</td>
+<td align="right">0.0000000</td>
+<td align="right">35</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">234</td>
+<td align="right">0.0000000</td>
+<td align="right">21</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">24</td>
+<td align="right">0.0000000</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">3</td>
+<td align="right">0.0000000</td>
+<td align="right">30</td>
+</tr>
+<tr class="even">
+<td align="left">14B_v1</td>
+<td align="left">34</td>
+<td align="right">0.0000000</td>
+<td align="right">11</td>
+</tr>
+<tr class="odd">
+<td align="left">14B_v1</td>
+<td align="left">4</td>
+<td align="right">0.0000000</td>
+<td align="right">59</td>
+</tr>
+</tbody>
+</table>
+<div id="histogram" class="section level3">
+<h3><span class="header-section-number">3.3.1</span> Histogram</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(fourteenb_v1, <span class="kw">aes</span>(<span class="dt">x=</span>p_value)) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth=</span>.<span class="dv">01</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Item14B_v1&quot;</span>)<span class="op">+</span><span class="st"> </span><span class="kw">xlim</span>(<span class="op">-</span>.<span class="dv">01</span>,<span class="dv">1</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylim</span>(<span class="dv">0</span>,<span class="dv">20</span>)</code></pre></div>
+<p><img src="smartitem_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="item-10b-v1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="remove-correct-response.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/lunr.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["smartitem.pdf", "smartitem.epub"],
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

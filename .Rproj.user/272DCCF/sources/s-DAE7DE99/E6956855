@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1536351870046.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E6956855",
+    "lastKnownWriteTime" : 1536352435,
+    "last_content_update" : 1536352435141,
+    "path" : "~/Documents/projects/research_book/smartitem/07-newchap.Rmd",
+    "project_path" : "07-newchap.Rmd",
+    "properties" : {
+        "cursorPosition" : "12,49",
+        "last_setup_crc32" : "",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

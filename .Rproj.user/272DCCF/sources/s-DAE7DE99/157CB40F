@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1536352246031.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "157CB40F",
+    "lastKnownWriteTime" : 1536875477,
+    "last_content_update" : 1536875477794,
+    "path" : "~/Documents/projects/research_book/smartitem/03-DOMCDifficultyVariance.Rmd",
+    "project_path" : "03-DOMCDifficultyVariance.Rmd",
+    "properties" : {
+        "cursorPosition" : "5,173",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
