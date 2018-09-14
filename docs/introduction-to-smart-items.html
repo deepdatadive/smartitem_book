@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SMRT</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook.">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="SMRT" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="SMRT" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Chris Foster">
+
+
+<meta name="date" content="2018-09-14">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="domc-difficulty-variance.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Smart items</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html"><i class="fa fa-check"></i><b>2</b> Introduction to Smart Items</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html#purpose-of-building-smart-items"><i class="fa fa-check"></i><b>2.1</b> Purpose of Building Smart Items</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html#smart-item-logic"><i class="fa fa-check"></i><b>2.2</b> Smart Item Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html"><i class="fa fa-check"></i><b>3</b> DOMC Difficulty Variance</a><ul>
+<li class="chapter" data-level="3.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#initial-run"><i class="fa fa-check"></i><b>3.1</b> Initial Run</a></li>
+<li class="chapter" data-level="3.2" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-10b_v1"><i class="fa fa-check"></i><b>3.2</b> Item 10B_v1</a></li>
+<li class="chapter" data-level="3.3" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-14b_v1"><i class="fa fa-check"></i><b>3.3</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram"><i class="fa fa-check"></i><b>3.3.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#remove-correct-response"><i class="fa fa-check"></i><b>3.4</b> Remove correct response</a></li>
+<li class="chapter" data-level="3.5" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-10b_v1-1"><i class="fa fa-check"></i><b>3.5</b> Item 10B_v1</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-1"><i class="fa fa-check"></i><b>3.5.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-14b_v1-1"><i class="fa fa-check"></i><b>3.6</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-2"><i class="fa fa-check"></i><b>3.6.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#all-item-plots"><i class="fa fa-check"></i><b>3.7</b> All Item Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="final-words.html"><a href="final-words.html"><i class="fa fa-check"></i><b>4</b> Final Words</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="5" data-path="level-1.html"><a href="level-1.html"><i class="fa fa-check"></i><b>5</b> Level 1</a><ul>
+<li class="chapter" data-level="5.1" data-path="level-1.html"><a href="level-1.html#level-2"><i class="fa fa-check"></i><b>5.1</b> Level 2</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="level-1.html"><a href="level-1.html#level-3"><i class="fa fa-check"></i><b>5.1.1</b> Level 3</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="level-1.html"><a href="level-1.html#including-plots"><i class="fa fa-check"></i><b>5.2</b> Including Plots</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://caveon.com" target="blank">Caveon</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SMRT</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-smart-items" class="section level1">
+<h1><span class="header-section-number">2</span> Introduction to Smart Items</h1>
+<p>A SmartItem is first and foremost an item, used on exams to measure important skills. Like traditional items, it has an ID number, is stored on a computer, is evaluated like traditional items with expert reviews, and eventually response data from examinees. It can be used on any kind of test design, such as CAT, LOFT, etc. If and when it doesn’t function well, it can be repaired or deleted or retired.</p>
+<p>The main difference between a smart item and a normal item is that the smart item is written with three areas of expertise: Subject matter, item writing and programming. With a well written and specific objective, with the help of a programmer and enough content expertise it is possible to write a single item which can cover the entire range of an objective. With the help of a programmer an item writer can write a series of stems, options, correct responses and incorrect responses that can generate a large amount of potential item derivatives based on a single objective. This process creates an item that is less static than a single multiple choice item.</p>
+<p>In order better understand a smart item it is best to start with an example. An illustrativec example would come from an elementary math test. A single objective might be: Add two single digit numbers. There are only 10 single digit numbers (including 0) So really there is only (10!/ 2!(10-2)!) = 45 possible options as long as order doesn’t matter.</p>
+<p>Now, a single item writer could write all 45 items and cover the objective completely. However, it is also possible to write a simple program which generates all 45 possible questions. Now, for a fixed form test it would be likely that the item writer woudl not write all 45 options but instead write 2 or 3 of which one would be selected for the first form of the test while a different one might be selected for a second form. However, when administering a smart item to participants each participant would get a random stem and random options (including the correct option).</p>
+<p>Now, for a simple math objective it might not be necessary to write an algorithm that writes the 45 different possible stems for the objective. However, imagine an objective where there are 206 possible answers such as “Identify each bone in the human body.” Or perhaps there is an objective which asks participants to arrange 4 words in alphabetical order. The words can be anything in the human dictionary. Now there are 170,000 words in the english language and picking 4 leaves 3.479x10^19 possible options to completely cover the objective content and no item writer can write all of them and given current test construction methods there is no reason to do so.</p>
+<div id="purpose-of-building-smart-items" class="section level2">
+<h2><span class="header-section-number">2.1</span> Purpose of Building Smart Items</h2>
+</div>
+<div id="smart-item-logic" class="section level2">
+<h2><span class="header-section-number">2.2</span> Smart Item Logic</h2>
+<p>A first step to understanding the logic behind smart items is to understand the logic of randomization in experimentation. In 1925 Sir Ronald Fisher outlined what is considered the cornerstone of experimental research today: randomization. Randomization has three primary purposes:</p>
+<ol style="list-style-type: decimal">
+<li><p>It helps to distribute idosyncratic characteristics of participants to groups so that it does not bias the outcome. If participants could self select groups or were grouped based on characteristics than it could create systematic biases in the outcome based on participant characteristics.</p></li>
+<li><p>Randomization helps calculate unbiased estimate of error effects. IE: those effects not attributable to the manipulation of an independent variable</p></li>
+<li><p>Randomization helps ensure that error efects are statistically independent.</p></li>
+</ol>
+<p>Now, considering point #1 a bit more: Randomization helps ensure that within group variability is Independent and identically distributed (IID) or in other words, within group variability does not contain bias and is simply noise. Without randomization it could easily contain any number of biases which could decrease or increase the differnces between groups. It is impossible to list all possible systematic biases that could creep into an experiment. Maybe all college educated participants self select themselves into a specific group or one gender reacts differently to a group assignment than another.</p>
+<p>While other papers have talked in length about the importance of randomization in experimental design for the purposes of this section randomization removes systematic bias within group.</p>
+<p>One natural artifact of the randomization process is an increase in within-group variation. If participants are asigned to groups based on characterisitcs or allowed to self select, more similar participants will end up in the same group reducing the amount of variability in the group. While a decrease in within-group variability inevitibly increases the probability of a significant effect in an experiment, the significant effect may simply be due to a bias brought by the selection process… which simply shows the importance of randomization. Even though variation is introduced, results are more trustworthy.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="domc-difficulty-variance.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": ["smartitem.pdf", "smartitem.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
