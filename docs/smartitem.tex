@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-14}
+    \date{2018-09-19}
 
 \usepackage{booktabs}
 
@@ -212,10 +212,10 @@ Items}\label{purpose-of-building-smart-items}
 \section{Smart Item Logic}\label{smart-item-logic}
 
 A first step to understanding the logic behind smart items is to
-understand the logic of randomization in experimentation. In 1925 Sir
-Ronald Fisher \citet{fisher1925} outlined what is considered the
-cornerstone of experimental research today: randomization. Randomization
-has three primary purposes:
+understand the logic of randomization in experimentation. Sir Ronald
+Fisher \citet{fisher1925} outlined what is considered the cornerstone of
+experimental research today: randomization. Randomization has three
+primary purposes:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi})}
@@ -585,6 +585,251 @@ item\_id & order\_no\_cr & p\_value & count\\
 \end{Shaded}
 
 \includegraphics{smartitem_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\chapter{DOMC Difficulty Factors}\label{domc-difficulty-factors}
+
+The purpose of this chapter is to briefly address portions of the item
+format that may lead to systematic differences in difficulty for DOMC
+items
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(readr)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(lemon)}
+
+\NormalTok{setwd_thisdir <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ () \{}
+\NormalTok{  this.dir <-}\StringTok{ }\KeywordTok{dirname}\NormalTok{(}\KeywordTok{parent.frame}\NormalTok{(}\DecValTok{3}\NormalTok{)}\OperatorTok{$}\NormalTok{ofile)}
+  \KeywordTok{setwd}\NormalTok{(this.dir)}
+\NormalTok{\}}
+
+
+\NormalTok{hp_data =}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{'data/domc_order_difficulty/Full Responses After Exclusions.csv'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   delivery_id = col_character(),
+##   item_id = col_character(),
+##   item_type = col_character(),
+##   item_total_seconds = col_double(),
+##   score = col_integer(),
+##   points_possible = col_integer(),
+##   key = col_character(),
+##   option_presented = col_character(),
+##   response = col_integer(),
+##   item_component_type = col_character(),
+##   item_component_seconds = col_double(),
+##   start_time = col_datetime(format = ""),
+##   end_time = col_datetime(format = "")
+## )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hp_clean =}\StringTok{ }\NormalTok{hp_data }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_type }\OperatorTok{==}\StringTok{ 'domc'} \OperatorTok{|}\StringTok{ }\NormalTok{item_type }\OperatorTok{==}\StringTok{ 'multiple_choice'}\NormalTok{, item_component_type }\OperatorTok{==}\StringTok{ 'domc_option'} \OperatorTok{|}\StringTok{ }\NormalTok{item_component_type }\OperatorTok{==}\StringTok{ 'final'}\NormalTok{, }\OperatorTok{!}\KeywordTok{grepl}\NormalTok{(}\StringTok{'Survey'}\NormalTok{, hp_data}\OperatorTok{$}\NormalTok{item_id)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{option_order =} \KeywordTok{paste0}\NormalTok{(option_presented, }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{))}
+
+\NormalTok{hp_summary =}\StringTok{ }\NormalTok{hp_clean }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id, item_type) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{item_total_seconds =} \KeywordTok{max}\NormalTok{(item_total_seconds), }\DataTypeTok{item_order =} \KeywordTok{max}\NormalTok{(option_order), }\DataTypeTok{score =} \KeywordTok{max}\NormalTok{(score)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{order =} \KeywordTok{paste}\NormalTok{(}\KeywordTok{sort}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(item_order), }\StringTok{""}\NormalTok{))), }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ungroup}\NormalTok{()}
+
+\NormalTok{total_score =}\StringTok{ }\NormalTok{hp_summary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{total_score =} \KeywordTok{sum}\NormalTok{(score))}
+
+\NormalTok{hp_final =}\StringTok{ }\KeywordTok{left_join}\NormalTok{(hp_summary, total_score)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Joining, by = "delivery_id"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hp_final}\OperatorTok{$}\NormalTok{char_count =}\StringTok{ }\KeywordTok{nchar}\NormalTok{(hp_final}\OperatorTok{$}\NormalTok{order)}
+\end{Highlighting}
+\end{Shaded}
+
+\chapter{Total Test Score and Options
+Seen}\label{total-test-score-and-options-seen}
+
+Simply running a logistic regression predicting if a person will get an
+item correct based on teh total number of options seen seems disingenous
+for a DOMC item. The reason being is that more proficient examinees will
+on average see more options as they are more likely to reject incorrect
+options.
+
+Here we look at some regression results
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylogit <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(score }\OperatorTok{~}\StringTok{ }\NormalTok{total_score }\OperatorTok{+}\StringTok{ }\KeywordTok{factor}\NormalTok{(item_type) }\OperatorTok{+}\StringTok{ }\NormalTok{char_count, }\DataTypeTok{data =}\NormalTok{ hp_final, }\DataTypeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(mylogit) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = score ~ total_score + factor(item_type) + char_count, 
+##     family = "binomial", data = hp_final)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.4972  -1.0727   0.6177   0.8451   2.3305  
+## 
+## Coefficients:
+##                                   Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)                      -3.587105   0.055005  -65.21   <2e-16 ***
+## total_score                       0.217796   0.003298   66.04   <2e-16 ***
+## factor(item_type)multiple_choice -6.181737   0.160348  -38.55   <2e-16 ***
+## char_count                        0.504366   0.012474   40.43   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 59053  on 45758  degrees of freedom
+## Residual deviance: 51520  on 45755  degrees of freedom
+## AIC: 51528
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mylogit <-}\StringTok{ }\KeywordTok{glm}\NormalTok{(score }\OperatorTok{~}\StringTok{ }\KeywordTok{factor}\NormalTok{(item_type) }\OperatorTok{+}\StringTok{ }\NormalTok{char_count }\OperatorTok{+}\StringTok{ }\KeywordTok{factor}\NormalTok{(item_type)}\OperatorTok{*}\NormalTok{char_count, }\DataTypeTok{data =}\NormalTok{ hp_final, }\DataTypeTok{family =} \StringTok{"binomial"}\NormalTok{)}
+\KeywordTok{summary}\NormalTok{(mylogit) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = score ~ factor(item_type) + char_count + factor(item_type) * 
+##     char_count, family = "binomial", data = hp_final)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.0489  -1.3260   0.8314   0.8926   1.2630  
+## 
+## Coefficients: (1 not defined because of singularities)
+##                                             Estimate Std. Error z value
+## (Intercept)                                 -0.74081    0.03029  -24.46
+## factor(item_type)multiple_choice            -6.67167    0.15294  -43.62
+## char_count                                   0.54180    0.01188   45.61
+## factor(item_type)multiple_choice:char_count       NA         NA      NA
+##                                             Pr(>|z|)    
+## (Intercept)                                   <2e-16 ***
+## factor(item_type)multiple_choice              <2e-16 ***
+## char_count                                    <2e-16 ***
+## factor(item_type)multiple_choice:char_count       NA    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 59053  on 45758  degrees of freedom
+## Residual deviance: 56570  on 45756  degrees of freedom
+## AIC: 56576
+## 
+## Number of Fisher Scoring iterations: 4
+\end{verbatim}
+
+\chapter{Recall VS Deduction}\label{recall-vs-deduction}
+
+In this chapter we will look at some differences between recall and
+deduction items on a Harry Potter assessment.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\KeywordTok{library}\NormalTok{(readr)}
+\KeywordTok{library}\NormalTok{(knitr)}
+\KeywordTok{library}\NormalTok{(ggplot2)}
+\KeywordTok{library}\NormalTok{(lemon)}
+\KeywordTok{library}\NormalTok{(stringr)}
+\NormalTok{setwd_thisdir <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ () \{}
+\NormalTok{  this.dir <-}\StringTok{ }\KeywordTok{dirname}\NormalTok{(}\KeywordTok{parent.frame}\NormalTok{(}\DecValTok{3}\NormalTok{)}\OperatorTok{$}\NormalTok{ofile)}
+  \KeywordTok{setwd}\NormalTok{(this.dir)}
+\NormalTok{\}}
+
+\NormalTok{hp_data =}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{'data/domc_order_difficulty/Full Responses After Exclusions.csv'}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Parsed with column specification:
+## cols(
+##   delivery_id = col_character(),
+##   item_id = col_character(),
+##   item_type = col_character(),
+##   item_total_seconds = col_double(),
+##   score = col_integer(),
+##   points_possible = col_integer(),
+##   key = col_character(),
+##   option_presented = col_character(),
+##   response = col_integer(),
+##   item_component_type = col_character(),
+##   item_component_seconds = col_double(),
+##   start_time = col_datetime(format = ""),
+##   end_time = col_datetime(format = "")
+## )
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{hp_clean =}\StringTok{ }\NormalTok{hp_data }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_type }\OperatorTok{==}\StringTok{ 'domc'} \OperatorTok{|}\StringTok{ }\NormalTok{item_type }\OperatorTok{==}\StringTok{ 'multiple_choice'}\NormalTok{, item_component_type }\OperatorTok{==}\StringTok{ 'domc_option'} \OperatorTok{|}\StringTok{ }\NormalTok{item_component_type }\OperatorTok{==}\StringTok{ 'final'}\NormalTok{, }\OperatorTok{!}\KeywordTok{grepl}\NormalTok{(}\StringTok{'Survey'}\NormalTok{, hp_data}\OperatorTok{$}\NormalTok{item_id)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{option_order =} \KeywordTok{paste0}\NormalTok{(option_presented, }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{))}
+
+\NormalTok{recall <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"1"}\NormalTok{, }\StringTok{"2"}\NormalTok{, }\StringTok{"3"}\NormalTok{, }\StringTok{"4"}\NormalTok{, }\StringTok{"5"}\NormalTok{, }\StringTok{"6"}\NormalTok{, }\StringTok{"7"}\NormalTok{, }\StringTok{"8"}\NormalTok{, }\StringTok{"9"}\NormalTok{, }\StringTok{"10"}\NormalTok{, }\StringTok{"11"}\NormalTok{, }\StringTok{"12"}\NormalTok{)}
+\NormalTok{deduction =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"13"}\NormalTok{, }\StringTok{"14"}\NormalTok{, }\StringTok{"15"}\NormalTok{, }\StringTok{"16"}\NormalTok{, }\StringTok{"17"}\NormalTok{, }\StringTok{"18"}\NormalTok{, }\StringTok{"19"}\NormalTok{, }\StringTok{"20"}\NormalTok{, }\StringTok{"21"}\NormalTok{, }\StringTok{"22"}\NormalTok{)}
+\NormalTok{hp_clean}\OperatorTok{$}\NormalTok{deduction <-}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\KeywordTok{paste}\NormalTok{(deduction,}\DataTypeTok{collapse=}\StringTok{"|"}\NormalTok{), hp_clean}\OperatorTok{$}\NormalTok{item_id),}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+
+\NormalTok{hp_items =}\StringTok{ }\NormalTok{hp_clean }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(item_id, item_type) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{p_value =} \KeywordTok{mean}\NormalTok{(score), }\DataTypeTok{count =} \KeywordTok{n}\NormalTok{(), }\DataTypeTok{deduction =} \KeywordTok{mean}\NormalTok{(deduction,}\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
+\NormalTok{hp_items}\OperatorTok{$}\NormalTok{item_number =}\StringTok{ }\KeywordTok{str_extract}\NormalTok{(hp_items}\OperatorTok{$}\NormalTok{item_id, }\StringTok{"[0-9]+"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Some Graphs}\label{some-graphs}
+
+Here is the difference in p-value between DOMC and multiple choice for
+the same items.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(hp_items, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{item_type, }\DataTypeTok{y=}\NormalTok{p_value, }\DataTypeTok{fill=}\NormalTok{item_type)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat=}\StringTok{"identity"}\NormalTok{)  }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{item_number)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+Here is the difference in p-value between DOMC and multiple choice for
+the same items.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{just_mc =}\StringTok{ }\NormalTok{hp_items }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_type }\OperatorTok{==}\StringTok{ 'multiple_choice'}\NormalTok{)}
+\NormalTok{just_domc =}\StringTok{ }\NormalTok{hp_items }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_type }\OperatorTok{!=}\StringTok{ 'multiple_choice'}\NormalTok{)}
+
+\NormalTok{differences =}\StringTok{ }\NormalTok{hp_items }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(item_type) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{average_p_value =} \KeywordTok{mean}\NormalTok{(p_value, }\DataTypeTok{na.rm=}\OtherTok{TRUE}\NormalTok{))}
+\KeywordTok{kable}\NormalTok{(differences)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|r}
+\hline
+item\_type & average\_p\_value\\
+\hline
+domc & 0.6933272\\
+\hline
+multiple\_choice & 0.6741205\\
+\hline
+\end{tabular}
+
+The total difference in p-values between item\_types is -0.0192067.
+
+Multiple Choice items appear to be slightly more difficult.
 
 \chapter{Final Words}\label{final-words}
 

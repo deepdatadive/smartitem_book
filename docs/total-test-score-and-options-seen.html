@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   
   
-<link rel="prev" href="domc-difficulty-variance.html">
-<link rel="next" href="total-test-score-and-options-seen.html">
+<link rel="prev" href="domc-difficulty-factors.html">
+<link rel="next" href="recall-vs-deduction.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -150,55 +150,78 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="domc-difficulty-factors" class="section level1">
-<h1><span class="header-section-number">4</span> DOMC Difficulty Factors</h1>
-<p>The purpose of this chapter is to briefly address portions of the item format that may lead to systematic differences in difficulty for DOMC items</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(readr)
-<span class="kw">library</span>(knitr)
-<span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(lemon)
+<div id="total-test-score-and-options-seen" class="section level1">
+<h1><span class="header-section-number">5</span> Total Test Score and Options Seen</h1>
+<p>Simply running a logistic regression predicting if a person will get an item correct based on teh total number of options seen seems disingenous for a DOMC item. The reason being is that more proficient examinees will on average see more options as they are more likely to reject incorrect options.</p>
+<p>Here we look at some regression results</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mylogit &lt;-<span class="st"> </span><span class="kw">glm</span>(score <span class="op">~</span><span class="st"> </span>total_score <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(item_type) <span class="op">+</span><span class="st"> </span>char_count, <span class="dt">data =</span> hp_final, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)
+<span class="kw">summary</span>(mylogit) </code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = score ~ total_score + factor(item_type) + char_count, 
+##     family = &quot;binomial&quot;, data = hp_final)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.4972  -1.0727   0.6177   0.8451   2.3305  
+## 
+## Coefficients:
+##                                   Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                      -3.587105   0.055005  -65.21   &lt;2e-16 ***
+## total_score                       0.217796   0.003298   66.04   &lt;2e-16 ***
+## factor(item_type)multiple_choice -6.181737   0.160348  -38.55   &lt;2e-16 ***
+## char_count                        0.504366   0.012474   40.43   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 59053  on 45758  degrees of freedom
+## Residual deviance: 51520  on 45755  degrees of freedom
+## AIC: 51528
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mylogit &lt;-<span class="st"> </span><span class="kw">glm</span>(score <span class="op">~</span><span class="st"> </span><span class="kw">factor</span>(item_type) <span class="op">+</span><span class="st"> </span>char_count <span class="op">+</span><span class="st"> </span><span class="kw">factor</span>(item_type)<span class="op">*</span>char_count, <span class="dt">data =</span> hp_final, <span class="dt">family =</span> <span class="st">&quot;binomial&quot;</span>)
+<span class="kw">summary</span>(mylogit) </code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = score ~ factor(item_type) + char_count + factor(item_type) * 
+##     char_count, family = &quot;binomial&quot;, data = hp_final)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.0489  -1.3260   0.8314   0.8926   1.2630  
+## 
+## Coefficients: (1 not defined because of singularities)
+##                                             Estimate Std. Error z value
+## (Intercept)                                 -0.74081    0.03029  -24.46
+## factor(item_type)multiple_choice            -6.67167    0.15294  -43.62
+## char_count                                   0.54180    0.01188   45.61
+## factor(item_type)multiple_choice:char_count       NA         NA      NA
+##                                             Pr(&gt;|z|)    
+## (Intercept)                                   &lt;2e-16 ***
+## factor(item_type)multiple_choice              &lt;2e-16 ***
+## char_count                                    &lt;2e-16 ***
+## factor(item_type)multiple_choice:char_count       NA    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 59053  on 45758  degrees of freedom
+## Residual deviance: 56570  on 45756  degrees of freedom
+## AIC: 56576
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
 
-setwd_thisdir &lt;-<span class="st"> </span><span class="cf">function</span> () {
-  this.dir &lt;-<span class="st"> </span><span class="kw">dirname</span>(<span class="kw">parent.frame</span>(<span class="dv">3</span>)<span class="op">$</span>ofile)
-  <span class="kw">setwd</span>(this.dir)
-}
-
-
-hp_data =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&#39;data/domc_order_difficulty/Full Responses After Exclusions.csv&#39;</span>)</code></pre></div>
-<pre><code>## Parsed with column specification:
-## cols(
-##   delivery_id = col_character(),
-##   item_id = col_character(),
-##   item_type = col_character(),
-##   item_total_seconds = col_double(),
-##   score = col_integer(),
-##   points_possible = col_integer(),
-##   key = col_character(),
-##   option_presented = col_character(),
-##   response = col_integer(),
-##   item_component_type = col_character(),
-##   item_component_seconds = col_double(),
-##   start_time = col_datetime(format = &quot;&quot;),
-##   end_time = col_datetime(format = &quot;&quot;)
-## )</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hp_clean =<span class="st"> </span>hp_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(item_type <span class="op">==</span><span class="st"> &#39;domc&#39;</span> <span class="op">|</span><span class="st"> </span>item_type <span class="op">==</span><span class="st"> &#39;multiple_choice&#39;</span>, item_component_type <span class="op">==</span><span class="st"> &#39;domc_option&#39;</span> <span class="op">|</span><span class="st"> </span>item_component_type <span class="op">==</span><span class="st"> &#39;final&#39;</span>, <span class="op">!</span><span class="kw">grepl</span>(<span class="st">&#39;Survey&#39;</span>, hp_data<span class="op">$</span>item_id)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(delivery_id, item_id) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">option_order =</span> <span class="kw">paste0</span>(option_presented, <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>))
-
-hp_summary =<span class="st"> </span>hp_clean <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(delivery_id, item_id, item_type) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">item_total_seconds =</span> <span class="kw">max</span>(item_total_seconds), <span class="dt">item_order =</span> <span class="kw">max</span>(option_order), <span class="dt">score =</span> <span class="kw">max</span>(score)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(delivery_id, item_id) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">order =</span> <span class="kw">paste</span>(<span class="kw">sort</span>(<span class="kw">unlist</span>(<span class="kw">strsplit</span>(<span class="kw">as.character</span>(item_order), <span class="st">&quot;&quot;</span>))), <span class="dt">collapse =</span> <span class="st">&quot;&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">ungroup</span>()
-
-total_score =<span class="st"> </span>hp_summary <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(delivery_id) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarize</span>(<span class="dt">total_score =</span> <span class="kw">sum</span>(score))
-
-hp_final =<span class="st"> </span><span class="kw">left_join</span>(hp_summary, total_score)</code></pre></div>
-<pre><code>## Joining, by = &quot;delivery_id&quot;</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hp_final<span class="op">$</span>char_count =<span class="st"> </span><span class="kw">nchar</span>(hp_final<span class="op">$</span>order)</code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="domc-difficulty-variance.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="total-test-score-and-options-seen.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="domc-difficulty-factors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="recall-vs-deduction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
