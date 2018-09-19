@@ -1,0 +1,52 @@
+# Recall VS Deduction
+
+In this chapter we will look at some differences between recall and deduction items on a Harry Potter assessment.
+
+```{r cars}
+library(dplyr)
+library(readr)
+library(knitr)
+library(ggplot2)
+library(lemon)
+library(stringr)
+setwd_thisdir <- function () {
+  this.dir <- dirname(parent.frame(3)$ofile)
+  setwd(this.dir)
+}
+
+hp_data = read_csv('data/domc_order_difficulty/Full Responses After Exclusions.csv')
+
+hp_clean = hp_data %>% filter(item_type == 'domc' | item_type == 'multiple_choice', item_component_type == 'domc_option' | item_component_type == 'final', !grepl('Survey', hp_data$item_id)) %>% group_by(delivery_id, item_id) %>% mutate(option_order = paste0(option_presented, collapse = ""))
+
+recall <- c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12")
+deduction = c("13", "14", "15", "16", "17", "18", "19", "20", "21", "22")
+hp_clean$deduction <- ifelse(grepl(paste(deduction,collapse="|"), hp_clean$item_id),1,0)
+
+hp_items = hp_clean %>% group_by(item_id, item_type) %>% summarize(p_value = mean(score), count = n(), deduction = mean(deduction,na.rm=TRUE))
+hp_items$item_number = str_extract(hp_items$item_id, "[0-9]+")
+```
+
+## Some Graphs
+
+Here is the difference in p-value between DOMC and multiple choice for the same items.
+
+```{r}
+
+ggplot(hp_items, aes(x=item_type, y=p_value, fill=item_type)) + geom_bar(stat="identity")  + facet_wrap(~item_number)
+
+```
+
+Here is the difference in p-value between DOMC and multiple choice for the same items.
+
+```{r}
+just_mc = hp_items %>% filter(item_type == 'multiple_choice')
+just_domc = hp_items %>% filter(item_type != 'multiple_choice')
+
+differences = hp_items %>% group_by(item_type) %>% summarize(average_p_value = mean(p_value, na.rm=TRUE))
+kable(differences)
+
+```
+
+The total difference in p-values between item_types is `r mean(just_mc$p_value) - mean(just_domc$p_value)`.
+
+Multiple Choice items appear to be slightly more difficult.

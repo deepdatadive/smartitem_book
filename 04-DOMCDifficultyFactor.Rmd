@@ -1,0 +1,46 @@
+# DOMC Difficulty Factors
+
+The purpose of this chapter is to briefly address portions of the item format that may lead to systematic differences in difficulty for DOMC items
+
+```{r}
+
+library(dplyr)
+library(readr)
+library(knitr)
+library(ggplot2)
+library(lemon)
+
+setwd_thisdir <- function () {
+  this.dir <- dirname(parent.frame(3)$ofile)
+  setwd(this.dir)
+}
+
+
+hp_data = read_csv('data/domc_order_difficulty/Full Responses After Exclusions.csv')
+
+hp_clean = hp_data %>% filter(item_type == 'domc' | item_type == 'multiple_choice', item_component_type == 'domc_option' | item_component_type == 'final', !grepl('Survey', hp_data$item_id)) %>% group_by(delivery_id, item_id) %>% mutate(option_order = paste0(option_presented, collapse = ""))
+
+hp_summary = hp_clean %>% group_by(delivery_id, item_id, item_type) %>% summarize(item_total_seconds = max(item_total_seconds), item_order = max(option_order), score = max(score)) %>% group_by(delivery_id, item_id) %>% mutate(order = paste(sort(unlist(strsplit(as.character(item_order), ""))), collapse = "")) %>% ungroup()
+
+total_score = hp_summary %>% group_by(delivery_id) %>% summarize(total_score = sum(score))
+
+hp_final = left_join(hp_summary, total_score)
+hp_final$char_count = nchar(hp_final$order)
+
+```
+
+# Total Test Score and Options Seen
+
+Simply running a logistic regression predicting if a person will get an item correct based on teh total number of options seen seems disingenous for a DOMC item. The reason being is that more proficient examinees will on average see more options as they are more likely to reject incorrect options. 
+
+
+Here we look at some regression results
+
+```{r}
+mylogit <- glm(score ~ total_score + factor(item_type) + char_count, data = hp_final, family = "binomial")
+summary(mylogit) 
+
+mylogit <- glm(score ~ factor(item_type) + char_count + factor(item_type)*char_count, data = hp_final, family = "binomial")
+summary(mylogit) 
+```
+

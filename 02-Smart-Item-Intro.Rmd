@@ -14,7 +14,7 @@ Now, for a simple math objective it might not be necessary to write an algorithm
 
 ## Smart Item Logic
 
-A first step to understanding the logic behind smart items is to understand the logic of randomization in experimentation. In 1925 Sir Ronald Fisher outlined what is considered the cornerstone of experimental research today: randomization. Randomization has three primary purposes: 
+A first step to understanding the logic behind smart items is to understand the logic of randomization in experimentation. Sir Ronald Fisher @fisher1925 outlined what is considered the cornerstone of experimental research today: randomization. Randomization has three primary purposes: 
 
 1) It helps to distribute idosyncratic characteristics of participants to groups so that it does not bias the outcome. If participants could self select groups or were grouped based on characteristics than it could create systematic biases in the outcome based on participant characteristics.
 
