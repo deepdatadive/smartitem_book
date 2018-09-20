@@ -1,5 +1,8 @@
 # Introduction to Smart Items
 
+
+Dave Really REally wants to be able to make a change to this text document.
+
 A SmartItem is first and foremost an item, used on exams to measure important skills. Like traditional items, it has an ID number, is stored on a computer, is evaluated like traditional items with expert reviews, and eventually response data from examinees. It can be used on any kind of test design, such as CAT, LOFT, etc. If and when it doesn’t function well, it can be repaired or deleted or retired.
 
 The main difference between a smart item and a normal item is that the smart item is written with three areas of expertise: Subject matter, item writing and programming. With a well written and specific objective, with the help of a programmer and enough content expertise it is possible to write a single item which can cover the entire range of an objective. With the help of a programmer an item writer can write a series of stems, options, correct responses and incorrect responses that can generate a large amount of potential item derivatives based on a single objective. This process creates an item that is less static than a single multiple choice item.
