@@ -32,6 +32,7 @@ Here is the difference in p-value between DOMC and multiple choice for the same 
 
 ```{r}
 
+#here
 ggplot(hp_items, aes(x=item_type, y=p_value, fill=item_type)) + geom_bar(stat="identity")  + facet_wrap(~item_number)
 
 ```
