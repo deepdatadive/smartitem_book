@@ -125,7 +125,7 @@
   \postauthor{\par}
       \predate{\centering\large\emph}
   \postdate{\par}
-    \date{2018-09-20}
+    \date{2018-10-04}
 
 \usepackage{booktabs}
 
@@ -281,20 +281,32 @@ response (making all these p-values 0)
 \KeywordTok{library}\NormalTok{(knitr)}
 \KeywordTok{library}\NormalTok{(ggplot2)}
 \KeywordTok{library}\NormalTok{(lemon)}
+\KeywordTok{library}\NormalTok{(stringr)}
 
 \NormalTok{setwd_thisdir <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{ () \{}
 \NormalTok{  this.dir <-}\StringTok{ }\KeywordTok{dirname}\NormalTok{(}\KeywordTok{parent.frame}\NormalTok{(}\DecValTok{3}\NormalTok{)}\OperatorTok{$}\NormalTok{ofile)}
   \KeywordTok{setwd}\NormalTok{(this.dir)}
 \NormalTok{\}}
 
-
 \NormalTok{hp_data =}\StringTok{ }\KeywordTok{read_csv}\NormalTok{(}\StringTok{'data/domc_order_difficulty/Full Responses After Exclusions.csv'}\NormalTok{)}
 
 \NormalTok{hp_clean =}\StringTok{ }\NormalTok{hp_data }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_type }\OperatorTok{==}\StringTok{ 'domc'}\NormalTok{, item_component_type }\OperatorTok{==}\StringTok{ 'domc_option'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{option_order =} \KeywordTok{paste0}\NormalTok{(option_presented, }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{))}
 
+\NormalTok{hp_clean_mc =}\StringTok{ }\NormalTok{hp_data }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_type }\OperatorTok{==}\StringTok{ 'multiple_choice'}\NormalTok{, item_component_type }\OperatorTok{==}\StringTok{ 'final'}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{option_order =} \KeywordTok{paste0}\NormalTok{(option_presented, }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{))}
+\NormalTok{hp_clean_mc}\OperatorTok{$}\NormalTok{survey =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{grepl}\NormalTok{(}\StringTok{"Survey"}\NormalTok{,hp_clean_mc}\OperatorTok{$}\NormalTok{item_id),}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{)}
+\NormalTok{hp_clean_mc =}\StringTok{ }\NormalTok{hp_clean_mc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(survey }\OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)}
+\NormalTok{hp_clean_mc}\OperatorTok{$}\NormalTok{item_number =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(hp_clean_mc}\OperatorTok{$}\NormalTok{item_id, }\StringTok{"[0-9]+"}\NormalTok{))}
+
 \NormalTok{hp_summary =}\StringTok{ }\NormalTok{hp_clean }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{item_total_seconds =} \KeywordTok{max}\NormalTok{(item_total_seconds), }\DataTypeTok{item_order =} \KeywordTok{max}\NormalTok{(option_order), }\DataTypeTok{score =} \KeywordTok{max}\NormalTok{(score)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{order =} \KeywordTok{paste}\NormalTok{(}\KeywordTok{sort}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(item_order), }\StringTok{""}\NormalTok{))), }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{)) }
 
+\NormalTok{hp_summary_mc =}\StringTok{ }\NormalTok{hp_clean_mc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{item_total_seconds =} \KeywordTok{max}\NormalTok{(item_total_seconds), }\DataTypeTok{item_order =} \KeywordTok{max}\NormalTok{(option_order), }\DataTypeTok{score =} \KeywordTok{max}\NormalTok{(score)) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(delivery_id, item_id) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{order =} \KeywordTok{paste}\NormalTok{(}\KeywordTok{sort}\NormalTok{(}\KeywordTok{unlist}\NormalTok{(}\KeywordTok{strsplit}\NormalTok{(}\KeywordTok{as.character}\NormalTok{(item_order), }\StringTok{""}\NormalTok{))), }\DataTypeTok{collapse =} \StringTok{""}\NormalTok{)) }
+
 \NormalTok{hp_items =}\StringTok{ }\NormalTok{hp_summary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(item_id, order) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{p_value =} \KeywordTok{mean}\NormalTok{(score), }\DataTypeTok{count =} \KeywordTok{n}\NormalTok{())}
+\NormalTok{hp_items_mc =}\StringTok{ }\NormalTok{hp_summary_mc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(item_id, item_order) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{p_value =} \KeywordTok{mean}\NormalTok{(score), }\DataTypeTok{count =} \KeywordTok{n}\NormalTok{())}
+
+\NormalTok{all_items =}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(hp_items, hp_items_mc)}
+\NormalTok{all_items}\OperatorTok{$}\NormalTok{item_type =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(all_items}\OperatorTok{$}\NormalTok{item_order), }\StringTok{'DOMC'}\NormalTok{, }\StringTok{"MC"}\NormalTok{)}
+\NormalTok{all_items}\OperatorTok{$}\NormalTok{item_number =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(all_items}\OperatorTok{$}\NormalTok{item_id, }\StringTok{"[0-9]+"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -381,6 +393,271 @@ item\_id & order & p\_value & count\\
 \end{Shaded}
 
 \includegraphics{smartitem_files/figure-latex/unnamed-chunk-4-1.pdf}
+\#\# Item 10A\_v1
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tena_v1 =}\StringTok{ }\NormalTok{hp_items_mc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_id }\OperatorTok{==}\StringTok{ '10A_v1'}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(tena_v1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|l|r|r}
+\hline
+item\_id & item\_order & p\_value & count\\
+\hline
+10A\_v1 & [0, 1, 2, 3, 4] & 1.0000000 & 9\\
+\hline
+10A\_v1 & [0, 1, 2, 4, 3] & 1.0000000 & 4\\
+\hline
+10A\_v1 & [0, 1, 3, 2, 4] & 0.7500000 & 8\\
+\hline
+10A\_v1 & [0, 1, 3, 4, 2] & 1.0000000 & 7\\
+\hline
+10A\_v1 & [0, 1, 4, 2, 3] & 0.8750000 & 8\\
+\hline
+10A\_v1 & [0, 1, 4, 3, 2] & 1.0000000 & 13\\
+\hline
+10A\_v1 & [0, 2, 1, 3, 4] & 0.8333333 & 6\\
+\hline
+10A\_v1 & [0, 2, 1, 4, 3] & 1.0000000 & 8\\
+\hline
+10A\_v1 & [0, 2, 3, 1, 4] & 0.8235294 & 17\\
+\hline
+10A\_v1 & [0, 2, 3, 4, 1] & 0.7142857 & 7\\
+\hline
+10A\_v1 & [0, 2, 4, 1, 3] & 1.0000000 & 6\\
+\hline
+10A\_v1 & [0, 2, 4, 3, 1] & 1.0000000 & 14\\
+\hline
+10A\_v1 & [0, 3, 1, 2, 4] & 0.7142857 & 7\\
+\hline
+10A\_v1 & [0, 3, 1, 4, 2] & 0.9375000 & 16\\
+\hline
+10A\_v1 & [0, 3, 2, 1, 4] & 1.0000000 & 12\\
+\hline
+10A\_v1 & [0, 3, 2, 4, 1] & 1.0000000 & 12\\
+\hline
+10A\_v1 & [0, 3, 4, 1, 2] & 1.0000000 & 9\\
+\hline
+10A\_v1 & [0, 3, 4, 2, 1] & 1.0000000 & 11\\
+\hline
+10A\_v1 & [0, 4, 1, 2, 3] & 0.9166667 & 12\\
+\hline
+10A\_v1 & [0, 4, 1, 3, 2] & 0.7777778 & 9\\
+\hline
+10A\_v1 & [0, 4, 2, 1, 3] & 1.0000000 & 8\\
+\hline
+10A\_v1 & [0, 4, 2, 3, 1] & 0.8888889 & 9\\
+\hline
+10A\_v1 & [0, 4, 3, 1, 2] & 0.8333333 & 6\\
+\hline
+10A\_v1 & [0, 4, 3, 2, 1] & 1.0000000 & 8\\
+\hline
+10A\_v1 & [1, 0, 2, 3, 4] & 0.7500000 & 8\\
+\hline
+10A\_v1 & [1, 0, 2, 4, 3] & 0.8750000 & 8\\
+\hline
+10A\_v1 & [1, 0, 3, 2, 4] & 1.0000000 & 13\\
+\hline
+10A\_v1 & [1, 0, 3, 4, 2] & 0.9090909 & 11\\
+\hline
+10A\_v1 & [1, 0, 4, 2, 3] & 0.9166667 & 12\\
+\hline
+10A\_v1 & [1, 0, 4, 3, 2] & 1.0000000 & 14\\
+\hline
+10A\_v1 & [1, 2, 0, 3, 4] & 1.0000000 & 9\\
+\hline
+10A\_v1 & [1, 2, 0, 4, 3] & 1.0000000 & 13\\
+\hline
+10A\_v1 & [1, 2, 3, 0, 4] & 1.0000000 & 5\\
+\hline
+10A\_v1 & [1, 2, 3, 4, 0] & 0.6000000 & 5\\
+\hline
+10A\_v1 & [1, 2, 4, 0, 3] & 0.9285714 & 14\\
+\hline
+10A\_v1 & [1, 2, 4, 3, 0] & 1.0000000 & 4\\
+\hline
+10A\_v1 & [1, 3, 0, 2, 4] & 1.0000000 & 10\\
+\hline
+10A\_v1 & [1, 3, 0, 4, 2] & 0.9090909 & 11\\
+\hline
+10A\_v1 & [1, 3, 2, 0, 4] & 0.8571429 & 14\\
+\hline
+10A\_v1 & [1, 3, 2, 4, 0] & 1.0000000 & 9\\
+\hline
+10A\_v1 & [1, 3, 4, 0, 2] & 1.0000000 & 3\\
+\hline
+10A\_v1 & [1, 3, 4, 2, 0] & 0.9090909 & 11\\
+\hline
+10A\_v1 & [1, 4, 0, 2, 3] & 1.0000000 & 18\\
+\hline
+10A\_v1 & [1, 4, 0, 3, 2] & 0.9000000 & 10\\
+\hline
+10A\_v1 & [1, 4, 2, 0, 3] & 1.0000000 & 6\\
+\hline
+10A\_v1 & [1, 4, 2, 3, 0] & 1.0000000 & 9\\
+\hline
+10A\_v1 & [1, 4, 3, 0, 2] & 0.8461538 & 13\\
+\hline
+10A\_v1 & [1, 4, 3, 2, 0] & 0.9000000 & 10\\
+\hline
+10A\_v1 & [2, 0, 1, 3, 4] & 0.8571429 & 7\\
+\hline
+10A\_v1 & [2, 0, 1, 4, 3] & 0.8461538 & 13\\
+\hline
+10A\_v1 & [2, 0, 3, 1, 4] & 1.0000000 & 7\\
+\hline
+10A\_v1 & [2, 0, 3, 4, 1] & 1.0000000 & 6\\
+\hline
+10A\_v1 & [2, 0, 4, 1, 3] & 0.8888889 & 9\\
+\hline
+10A\_v1 & [2, 0, 4, 3, 1] & 1.0000000 & 4\\
+\hline
+10A\_v1 & [2, 1, 0, 3, 4] & 0.8750000 & 8\\
+\hline
+10A\_v1 & [2, 1, 0, 4, 3] & 1.0000000 & 6\\
+\hline
+10A\_v1 & [2, 1, 3, 0, 4] & 0.9166667 & 12\\
+\hline
+10A\_v1 & [2, 1, 3, 4, 0] & 0.8181818 & 11\\
+\hline
+10A\_v1 & [2, 1, 4, 0, 3] & 0.8333333 & 12\\
+\hline
+10A\_v1 & [2, 1, 4, 3, 0] & 0.8000000 & 10\\
+\hline
+10A\_v1 & [2, 3, 0, 1, 4] & 0.7777778 & 9\\
+\hline
+10A\_v1 & [2, 3, 0, 4, 1] & 0.8571429 & 7\\
+\hline
+10A\_v1 & [2, 3, 1, 0, 4] & 1.0000000 & 11\\
+\hline
+10A\_v1 & [2, 3, 1, 4, 0] & 0.8750000 & 8\\
+\hline
+10A\_v1 & [2, 3, 4, 0, 1] & 0.8333333 & 6\\
+\hline
+10A\_v1 & [2, 3, 4, 1, 0] & 1.0000000 & 9\\
+\hline
+10A\_v1 & [2, 4, 0, 1, 3] & 1.0000000 & 4\\
+\hline
+10A\_v1 & [2, 4, 0, 3, 1] & 1.0000000 & 10\\
+\hline
+10A\_v1 & [2, 4, 1, 0, 3] & 1.0000000 & 11\\
+\hline
+10A\_v1 & [2, 4, 1, 3, 0] & 0.7647059 & 17\\
+\hline
+10A\_v1 & [2, 4, 3, 0, 1] & 1.0000000 & 8\\
+\hline
+10A\_v1 & [2, 4, 3, 1, 0] & 0.6000000 & 5\\
+\hline
+10A\_v1 & [3, 0, 1, 2, 4] & 0.9285714 & 14\\
+\hline
+10A\_v1 & [3, 0, 1, 4, 2] & 0.9285714 & 14\\
+\hline
+10A\_v1 & [3, 0, 2, 1, 4] & 0.9166667 & 12\\
+\hline
+10A\_v1 & [3, 0, 2, 4, 1] & 0.8750000 & 8\\
+\hline
+10A\_v1 & [3, 0, 4, 1, 2] & 1.0000000 & 11\\
+\hline
+10A\_v1 & [3, 0, 4, 2, 1] & 1.0000000 & 7\\
+\hline
+10A\_v1 & [3, 1, 0, 2, 4] & 0.8333333 & 12\\
+\hline
+10A\_v1 & [3, 1, 0, 4, 2] & 0.7777778 & 9\\
+\hline
+10A\_v1 & [3, 1, 2, 0, 4] & 0.8333333 & 12\\
+\hline
+10A\_v1 & [3, 1, 2, 4, 0] & 1.0000000 & 11\\
+\hline
+10A\_v1 & [3, 1, 4, 0, 2] & 0.8666667 & 15\\
+\hline
+10A\_v1 & [3, 1, 4, 2, 0] & 0.8333333 & 12\\
+\hline
+10A\_v1 & [3, 2, 0, 1, 4] & 0.6000000 & 10\\
+\hline
+10A\_v1 & [3, 2, 0, 4, 1] & 1.0000000 & 7\\
+\hline
+10A\_v1 & [3, 2, 1, 0, 4] & 1.0000000 & 7\\
+\hline
+10A\_v1 & [3, 2, 1, 4, 0] & 0.9166667 & 12\\
+\hline
+10A\_v1 & [3, 2, 4, 0, 1] & 1.0000000 & 6\\
+\hline
+10A\_v1 & [3, 2, 4, 1, 0] & 1.0000000 & 7\\
+\hline
+10A\_v1 & [3, 4, 0, 1, 2] & 0.9000000 & 10\\
+\hline
+10A\_v1 & [3, 4, 0, 2, 1] & 1.0000000 & 6\\
+\hline
+10A\_v1 & [3, 4, 1, 0, 2] & 0.9000000 & 10\\
+\hline
+10A\_v1 & [3, 4, 1, 2, 0] & 0.8000000 & 10\\
+\hline
+10A\_v1 & [3, 4, 2, 0, 1] & 0.8333333 & 6\\
+\hline
+10A\_v1 & [3, 4, 2, 1, 0] & 0.8750000 & 8\\
+\hline
+10A\_v1 & [4, 0, 1, 2, 3] & 1.0000000 & 18\\
+\hline
+10A\_v1 & [4, 0, 1, 3, 2] & 1.0000000 & 5\\
+\hline
+10A\_v1 & [4, 0, 2, 1, 3] & 0.7142857 & 7\\
+\hline
+10A\_v1 & [4, 0, 2, 3, 1] & 1.0000000 & 6\\
+\hline
+10A\_v1 & [4, 0, 3, 1, 2] & 0.8181818 & 11\\
+\hline
+10A\_v1 & [4, 0, 3, 2, 1] & 0.9375000 & 16\\
+\hline
+10A\_v1 & [4, 1, 0, 2, 3] & 0.9166667 & 12\\
+\hline
+10A\_v1 & [4, 1, 0, 3, 2] & 1.0000000 & 10\\
+\hline
+10A\_v1 & [4, 1, 2, 0, 3] & 1.0000000 & 11\\
+\hline
+10A\_v1 & [4, 1, 2, 3, 0] & 1.0000000 & 7\\
+\hline
+10A\_v1 & [4, 1, 3, 0, 2] & 1.0000000 & 3\\
+\hline
+10A\_v1 & [4, 1, 3, 2, 0] & 1.0000000 & 9\\
+\hline
+10A\_v1 & [4, 2, 0, 1, 3] & 0.8000000 & 10\\
+\hline
+10A\_v1 & [4, 2, 0, 3, 1] & 1.0000000 & 4\\
+\hline
+10A\_v1 & [4, 2, 1, 0, 3] & 0.8571429 & 7\\
+\hline
+10A\_v1 & [4, 2, 1, 3, 0] & 1.0000000 & 11\\
+\hline
+10A\_v1 & [4, 2, 3, 0, 1] & 0.9166667 & 12\\
+\hline
+10A\_v1 & [4, 2, 3, 1, 0] & 0.8000000 & 5\\
+\hline
+10A\_v1 & [4, 3, 0, 1, 2] & 0.8000000 & 10\\
+\hline
+10A\_v1 & [4, 3, 0, 2, 1] & 1.0000000 & 5\\
+\hline
+10A\_v1 & [4, 3, 1, 0, 2] & 0.8181818 & 11\\
+\hline
+10A\_v1 & [4, 3, 1, 2, 0] & 0.8333333 & 6\\
+\hline
+10A\_v1 & [4, 3, 2, 0, 1] & 0.7500000 & 8\\
+\hline
+10A\_v1 & [4, 3, 2, 1, 0] & 0.9166667 & 12\\
+\hline
+\end{tabular}
+
+\subsection{Histogram}\label{histogram-1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{theme_update}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+\KeywordTok{ggplot}\NormalTok{(tena_v1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{p_value)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\NormalTok{.}\DecValTok{01}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Item10A_v1"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 \section{Item 14b\_v1}\label{item-14b_v1}
 
@@ -430,7 +707,7 @@ item\_id & order & p\_value & count\tabularnewline
 \bottomrule
 \end{longtable}
 
-\subsection{Histogram}\label{histogram-1}
+\subsection{Histogram}\label{histogram-2}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -438,7 +715,154 @@ item\_id & order & p\_value & count\tabularnewline
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smartitem_files/figure-latex/unnamed-chunk-6-1.pdf}
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\section{Item 14a\_v1}\label{item-14a_v1}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fourteenb_v1 =}\StringTok{ }\NormalTok{hp_items_mc }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_id }\OperatorTok{==}\StringTok{ '14A_v1'}\NormalTok{)}
+\KeywordTok{kable}\NormalTok{(fourteenb_v1, }\DataTypeTok{format =} \StringTok{"markdown"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}llrr@{}}
+\toprule
+item\_id & item\_order & p\_value & count\tabularnewline
+\midrule
+\endhead
+14A\_v1 & {[}0, 1, 2, 3, 4{]} & 0.4285714 & 7\tabularnewline
+14A\_v1 & {[}0, 1, 2, 4, 3{]} & 0.5000000 & 10\tabularnewline
+14A\_v1 & {[}0, 1, 3, 2, 4{]} & 0.3000000 & 10\tabularnewline
+14A\_v1 & {[}0, 1, 3, 4, 2{]} & 0.2000000 & 10\tabularnewline
+14A\_v1 & {[}0, 1, 4, 2, 3{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}0, 1, 4, 3, 2{]} & 0.4444444 & 9\tabularnewline
+14A\_v1 & {[}0, 2, 1, 3, 4{]} & 0.1250000 & 8\tabularnewline
+14A\_v1 & {[}0, 2, 1, 4, 3{]} & 0.4285714 & 7\tabularnewline
+14A\_v1 & {[}0, 2, 3, 1, 4{]} & 0.1428571 & 7\tabularnewline
+14A\_v1 & {[}0, 2, 3, 4, 1{]} & 0.5555556 & 9\tabularnewline
+14A\_v1 & {[}0, 2, 4, 1, 3{]} & 0.1250000 & 8\tabularnewline
+14A\_v1 & {[}0, 2, 4, 3, 1{]} & 0.5714286 & 7\tabularnewline
+14A\_v1 & {[}0, 3, 1, 2, 4{]} & 0.1428571 & 7\tabularnewline
+14A\_v1 & {[}0, 3, 1, 4, 2{]} & 0.5000000 & 8\tabularnewline
+14A\_v1 & {[}0, 3, 2, 1, 4{]} & 0.4545455 & 11\tabularnewline
+14A\_v1 & {[}0, 3, 2, 4, 1{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}0, 3, 4, 1, 2{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}0, 3, 4, 2, 1{]} & 0.3000000 & 10\tabularnewline
+14A\_v1 & {[}0, 4, 1, 2, 3{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}0, 4, 1, 3, 2{]} & 0.5555556 & 9\tabularnewline
+14A\_v1 & {[}0, 4, 2, 1, 3{]} & 0.4000000 & 10\tabularnewline
+14A\_v1 & {[}0, 4, 2, 3, 1{]} & 0.2857143 & 7\tabularnewline
+14A\_v1 & {[}0, 4, 3, 1, 2{]} & 0.5500000 & 20\tabularnewline
+14A\_v1 & {[}0, 4, 3, 2, 1{]} & 0.4285714 & 14\tabularnewline
+14A\_v1 & {[}1, 0, 2, 3, 4{]} & 0.2222222 & 9\tabularnewline
+14A\_v1 & {[}1, 0, 2, 4, 3{]} & 0.3750000 & 8\tabularnewline
+14A\_v1 & {[}1, 0, 3, 2, 4{]} & 0.2857143 & 7\tabularnewline
+14A\_v1 & {[}1, 0, 3, 4, 2{]} & 0.2500000 & 12\tabularnewline
+14A\_v1 & {[}1, 0, 4, 2, 3{]} & 0.4000000 & 5\tabularnewline
+14A\_v1 & {[}1, 0, 4, 3, 2{]} & 0.4285714 & 7\tabularnewline
+14A\_v1 & {[}1, 2, 0, 3, 4{]} & 0.2727273 & 11\tabularnewline
+14A\_v1 & {[}1, 2, 0, 4, 3{]} & 0.2857143 & 7\tabularnewline
+14A\_v1 & {[}1, 2, 3, 0, 4{]} & 0.1111111 & 9\tabularnewline
+14A\_v1 & {[}1, 2, 3, 4, 0{]} & 0.2000000 & 5\tabularnewline
+14A\_v1 & {[}1, 2, 4, 0, 3{]} & 0.4444444 & 9\tabularnewline
+14A\_v1 & {[}1, 2, 4, 3, 0{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}1, 3, 0, 2, 4{]} & 0.2727273 & 11\tabularnewline
+14A\_v1 & {[}1, 3, 0, 4, 2{]} & 0.2000000 & 10\tabularnewline
+14A\_v1 & {[}1, 3, 2, 0, 4{]} & 0.1428571 & 7\tabularnewline
+14A\_v1 & {[}1, 3, 2, 4, 0{]} & 0.1333333 & 15\tabularnewline
+14A\_v1 & {[}1, 3, 4, 0, 2{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}1, 3, 4, 2, 0{]} & 0.1818182 & 11\tabularnewline
+14A\_v1 & {[}1, 4, 0, 2, 3{]} & 0.2307692 & 13\tabularnewline
+14A\_v1 & {[}1, 4, 0, 3, 2{]} & 0.5714286 & 14\tabularnewline
+14A\_v1 & {[}1, 4, 2, 0, 3{]} & 0.0000000 & 5\tabularnewline
+14A\_v1 & {[}1, 4, 2, 3, 0{]} & 0.1250000 & 8\tabularnewline
+14A\_v1 & {[}1, 4, 3, 0, 2{]} & 0.2000000 & 15\tabularnewline
+14A\_v1 & {[}1, 4, 3, 2, 0{]} & 0.1666667 & 6\tabularnewline
+14A\_v1 & {[}2, 0, 1, 3, 4{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}2, 0, 1, 4, 3{]} & 0.1428571 & 7\tabularnewline
+14A\_v1 & {[}2, 0, 3, 1, 4{]} & 0.2727273 & 11\tabularnewline
+14A\_v1 & {[}2, 0, 3, 4, 1{]} & 0.4615385 & 13\tabularnewline
+14A\_v1 & {[}2, 0, 4, 1, 3{]} & 0.3750000 & 8\tabularnewline
+14A\_v1 & {[}2, 0, 4, 3, 1{]} & 0.3333333 & 9\tabularnewline
+14A\_v1 & {[}2, 1, 0, 3, 4{]} & 0.1428571 & 7\tabularnewline
+14A\_v1 & {[}2, 1, 0, 4, 3{]} & 0.6666667 & 6\tabularnewline
+14A\_v1 & {[}2, 1, 3, 0, 4{]} & 0.1666667 & 6\tabularnewline
+14A\_v1 & {[}2, 1, 3, 4, 0{]} & 0.3333333 & 9\tabularnewline
+14A\_v1 & {[}2, 1, 4, 0, 3{]} & 0.5714286 & 7\tabularnewline
+14A\_v1 & {[}2, 1, 4, 3, 0{]} & 0.3000000 & 10\tabularnewline
+14A\_v1 & {[}2, 3, 0, 1, 4{]} & 0.7000000 & 10\tabularnewline
+14A\_v1 & {[}2, 3, 0, 4, 1{]} & 0.2000000 & 5\tabularnewline
+14A\_v1 & {[}2, 3, 1, 0, 4{]} & 0.3750000 & 8\tabularnewline
+14A\_v1 & {[}2, 3, 1, 4, 0{]} & 0.2727273 & 11\tabularnewline
+14A\_v1 & {[}2, 3, 4, 0, 1{]} & 0.2727273 & 11\tabularnewline
+14A\_v1 & {[}2, 3, 4, 1, 0{]} & 0.1818182 & 11\tabularnewline
+14A\_v1 & {[}2, 4, 0, 1, 3{]} & 0.3750000 & 8\tabularnewline
+14A\_v1 & {[}2, 4, 0, 3, 1{]} & 0.3636364 & 11\tabularnewline
+14A\_v1 & {[}2, 4, 1, 0, 3{]} & 0.1428571 & 7\tabularnewline
+14A\_v1 & {[}2, 4, 1, 3, 0{]} & 0.2000000 & 5\tabularnewline
+14A\_v1 & {[}2, 4, 3, 0, 1{]} & 0.2000000 & 10\tabularnewline
+14A\_v1 & {[}2, 4, 3, 1, 0{]} & 0.3636364 & 11\tabularnewline
+14A\_v1 & {[}3, 0, 1, 2, 4{]} & 0.0000000 & 7\tabularnewline
+14A\_v1 & {[}3, 0, 1, 4, 2{]} & 0.3333333 & 9\tabularnewline
+14A\_v1 & {[}3, 0, 2, 1, 4{]} & 0.3333333 & 6\tabularnewline
+14A\_v1 & {[}3, 0, 2, 4, 1{]} & 0.4166667 & 12\tabularnewline
+14A\_v1 & {[}3, 0, 4, 1, 2{]} & 0.2857143 & 7\tabularnewline
+14A\_v1 & {[}3, 0, 4, 2, 1{]} & 0.0000000 & 8\tabularnewline
+14A\_v1 & {[}3, 1, 0, 2, 4{]} & 0.0000000 & 4\tabularnewline
+14A\_v1 & {[}3, 1, 0, 4, 2{]} & 0.2727273 & 11\tabularnewline
+14A\_v1 & {[}3, 1, 2, 0, 4{]} & 0.4000000 & 10\tabularnewline
+14A\_v1 & {[}3, 1, 2, 4, 0{]} & 0.0909091 & 11\tabularnewline
+14A\_v1 & {[}3, 1, 4, 0, 2{]} & 0.1666667 & 12\tabularnewline
+14A\_v1 & {[}3, 1, 4, 2, 0{]} & 0.2000000 & 10\tabularnewline
+14A\_v1 & {[}3, 2, 0, 1, 4{]} & 0.2500000 & 12\tabularnewline
+14A\_v1 & {[}3, 2, 0, 4, 1{]} & 0.3333333 & 15\tabularnewline
+14A\_v1 & {[}3, 2, 1, 0, 4{]} & 0.0909091 & 11\tabularnewline
+14A\_v1 & {[}3, 2, 1, 4, 0{]} & 0.3076923 & 13\tabularnewline
+14A\_v1 & {[}3, 2, 4, 0, 1{]} & 0.3000000 & 10\tabularnewline
+14A\_v1 & {[}3, 2, 4, 1, 0{]} & 0.3750000 & 8\tabularnewline
+14A\_v1 & {[}3, 4, 0, 1, 2{]} & 0.2222222 & 9\tabularnewline
+14A\_v1 & {[}3, 4, 0, 2, 1{]} & 0.5833333 & 12\tabularnewline
+14A\_v1 & {[}3, 4, 1, 0, 2{]} & 0.1666667 & 6\tabularnewline
+14A\_v1 & {[}3, 4, 1, 2, 0{]} & 0.2000000 & 10\tabularnewline
+14A\_v1 & {[}3, 4, 2, 0, 1{]} & 0.1818182 & 11\tabularnewline
+14A\_v1 & {[}3, 4, 2, 1, 0{]} & 0.3333333 & 9\tabularnewline
+14A\_v1 & {[}4, 0, 1, 2, 3{]} & 0.2500000 & 16\tabularnewline
+14A\_v1 & {[}4, 0, 1, 3, 2{]} & 0.3750000 & 8\tabularnewline
+14A\_v1 & {[}4, 0, 2, 1, 3{]} & 0.3333333 & 3\tabularnewline
+14A\_v1 & {[}4, 0, 2, 3, 1{]} & 0.6666667 & 9\tabularnewline
+14A\_v1 & {[}4, 0, 3, 1, 2{]} & 0.3333333 & 12\tabularnewline
+14A\_v1 & {[}4, 0, 3, 2, 1{]} & 0.3636364 & 11\tabularnewline
+14A\_v1 & {[}4, 1, 0, 2, 3{]} & 0.5000000 & 10\tabularnewline
+14A\_v1 & {[}4, 1, 0, 3, 2{]} & 0.2500000 & 8\tabularnewline
+14A\_v1 & {[}4, 1, 2, 0, 3{]} & 0.1666667 & 12\tabularnewline
+14A\_v1 & {[}4, 1, 2, 3, 0{]} & 0.2000000 & 15\tabularnewline
+14A\_v1 & {[}4, 1, 3, 0, 2{]} & 0.2727273 & 11\tabularnewline
+14A\_v1 & {[}4, 1, 3, 2, 0{]} & 0.1764706 & 17\tabularnewline
+14A\_v1 & {[}4, 2, 0, 1, 3{]} & 0.2222222 & 9\tabularnewline
+14A\_v1 & {[}4, 2, 0, 3, 1{]} & 0.3000000 & 10\tabularnewline
+14A\_v1 & {[}4, 2, 1, 0, 3{]} & 0.5000000 & 8\tabularnewline
+14A\_v1 & {[}4, 2, 1, 3, 0{]} & 0.1875000 & 16\tabularnewline
+14A\_v1 & {[}4, 2, 3, 0, 1{]} & 0.2500000 & 4\tabularnewline
+14A\_v1 & {[}4, 2, 3, 1, 0{]} & 0.3333333 & 9\tabularnewline
+14A\_v1 & {[}4, 3, 0, 1, 2{]} & 0.3333333 & 9\tabularnewline
+14A\_v1 & {[}4, 3, 0, 2, 1{]} & 0.3333333 & 9\tabularnewline
+14A\_v1 & {[}4, 3, 1, 0, 2{]} & 0.1428571 & 14\tabularnewline
+14A\_v1 & {[}4, 3, 1, 2, 0{]} & 0.6666667 & 6\tabularnewline
+14A\_v1 & {[}4, 3, 2, 0, 1{]} & 0.3750000 & 8\tabularnewline
+14A\_v1 & {[}4, 3, 2, 1, 0{]} & 0.0833333 & 12\tabularnewline
+\bottomrule
+\end{longtable}
+
+\subsection{Histogram}\label{histogram-3}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(fourteenb_v1, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{p_value)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\NormalTok{.}\DecValTok{01}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Item14A_v1"}\NormalTok{)}\OperatorTok{+}\StringTok{ }\KeywordTok{xlim}\NormalTok{(}\OperatorTok{-}\NormalTok{.}\DecValTok{01}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-10-1.pdf}
 
 \section{Remove correct response}\label{remove-correct-response}
 
@@ -459,6 +883,10 @@ on.
 \NormalTok{hp_summary}\OperatorTok{$}\NormalTok{order_no_cr =}\StringTok{ }\KeywordTok{gsub}\NormalTok{(}\StringTok{'0'}\NormalTok{,}\StringTok{''}\NormalTok{,hp_summary}\OperatorTok{$}\NormalTok{order)}
 \NormalTok{hp_summary}\OperatorTok{$}\NormalTok{order_no_cr =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(hp_summary}\OperatorTok{$}\NormalTok{order_no_cr }\OperatorTok{==}\StringTok{ ''}\NormalTok{, }\StringTok{'0'}\NormalTok{, hp_summary}\OperatorTok{$}\NormalTok{order_no_cr)}
 \NormalTok{hp_items_no_cr =}\StringTok{ }\NormalTok{hp_summary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{group_by}\NormalTok{(item_id, order_no_cr) }\OperatorTok{%>%}\StringTok{ }\KeywordTok{summarize}\NormalTok{(}\DataTypeTok{p_value =} \KeywordTok{mean}\NormalTok{(score), }\DataTypeTok{count =} \KeywordTok{n}\NormalTok{())}
+
+\NormalTok{all_items =}\StringTok{ }\KeywordTok{bind_rows}\NormalTok{(hp_items_no_cr, hp_items_mc)}
+\NormalTok{all_items}\OperatorTok{$}\NormalTok{item_type =}\StringTok{ }\KeywordTok{ifelse}\NormalTok{(}\KeywordTok{is.na}\NormalTok{(all_items}\OperatorTok{$}\NormalTok{item_order), }\StringTok{'DOMC'}\NormalTok{, }\StringTok{"MC"}\NormalTok{)}
+\NormalTok{all_items}\OperatorTok{$}\NormalTok{item_number =}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{str_extract}\NormalTok{(all_items}\OperatorTok{$}\NormalTok{item_id, }\StringTok{"[0-9]+"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -509,7 +937,7 @@ item\_id & order\_no\_cr & p\_value & count\\
 \hline
 \end{tabular}
 
-\subsection{Histogram}\label{histogram-2}
+\subsection{Histogram}\label{histogram-4}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -518,7 +946,7 @@ item\_id & order\_no\_cr & p\_value & count\\
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smartitem_files/figure-latex/unnamed-chunk-9-1.pdf}
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-13-1.pdf}
 
 \section{Item 14b\_v1}\label{item-14b_v1-1}
 
@@ -567,7 +995,16 @@ item\_id & order\_no\_cr & p\_value & count\\
 \hline
 \end{tabular}
 
-\subsection{Histogram}\label{histogram-3}
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{theme_update}\NormalTok{(}\DataTypeTok{plot.title =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{hjust =} \FloatTok{0.5}\NormalTok{))}
+\KeywordTok{ggplot}\NormalTok{(all_items }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(item_number }\OperatorTok{==}\StringTok{ }\DecValTok{14}\NormalTok{), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{p_value, }\DataTypeTok{color=}\NormalTok{item_type)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{fill=}\StringTok{'white'}\NormalTok{, }\DataTypeTok{binwidth=}\NormalTok{.}\DecValTok{01}\NormalTok{, }\DataTypeTok{position=}\StringTok{'identity'}\NormalTok{, }\DataTypeTok{alpha=}\DecValTok{0}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"Item14"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlim}\NormalTok{(}\OperatorTok{-}\NormalTok{.}\DecValTok{01}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\subsection{Histogram}\label{histogram-5}
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -575,7 +1012,7 @@ item\_id & order\_no\_cr & p\_value & count\\
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smartitem_files/figure-latex/unnamed-chunk-11-1.pdf}
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-16-1.pdf}
 
 \section{All Item Plots}\label{all-item-plots}
 
@@ -583,11 +1020,11 @@ item\_id & order\_no\_cr & p\_value & count\\
 \begin{Highlighting}[]
 \NormalTok{knitr}\OperatorTok{::}\NormalTok{opts_chunk}\OperatorTok{$}\KeywordTok{set}\NormalTok{(}\DataTypeTok{fig.width=}\DecValTok{12}\NormalTok{, }\DataTypeTok{fig.height=}\DecValTok{20}\NormalTok{) }
 
-\KeywordTok{ggplot}\NormalTok{(hp_items_no_cr, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{p_value)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{binwidth=}\NormalTok{.}\DecValTok{01}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"All Items"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlim}\NormalTok{(}\OperatorTok{-}\NormalTok{.}\DecValTok{01}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{item_id, }\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{)}
+\KeywordTok{ggplot}\NormalTok{(all_items, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{p_value, }\DataTypeTok{color=}\NormalTok{item_type)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{fill=}\StringTok{'white'}\NormalTok{, }\DataTypeTok{binwidth=}\NormalTok{.}\DecValTok{01}\NormalTok{, }\DataTypeTok{position=}\StringTok{'identity'}\NormalTok{, }\DataTypeTok{alpha=}\DecValTok{0}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlim}\NormalTok{(}\OperatorTok{-}\NormalTok{.}\DecValTok{01}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_density}\NormalTok{() }\OperatorTok{+}\StringTok{ }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{title =} \StringTok{"All Items"}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{xlim}\NormalTok{(}\OperatorTok{-}\NormalTok{.}\DecValTok{01}\NormalTok{,}\DecValTok{1}\NormalTok{) }\OperatorTok{+}\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{20}\NormalTok{) }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{item_number, }\DataTypeTok{ncol=}\DecValTok{3}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smartitem_files/figure-latex/unnamed-chunk-12-1.pdf}
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-17-1.pdf}
 
 \chapter{DOMC Difficulty Factors}\label{domc-difficulty-factors}
 
@@ -801,11 +1238,12 @@ the same items.
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{#here}
 \KeywordTok{ggplot}\NormalTok{(hp_items, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{item_type, }\DataTypeTok{y=}\NormalTok{p_value, }\DataTypeTok{fill=}\NormalTok{item_type)) }\OperatorTok{+}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{stat=}\StringTok{"identity"}\NormalTok{)  }\OperatorTok{+}\StringTok{ }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{item_number)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{smartitem_files/figure-latex/unnamed-chunk-15-1.pdf}
+\includegraphics{smartitem_files/figure-latex/unnamed-chunk-20-1.pdf}
 
 Here is the difference in p-value between DOMC and multiple choice for
 the same items.

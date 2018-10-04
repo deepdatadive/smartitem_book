@@ -11,20 +11,32 @@ library(readr)
 library(knitr)
 library(ggplot2)
 library(lemon)
+library(stringr)
 
 setwd_thisdir <- function () {
   this.dir <- dirname(parent.frame(3)$ofile)
   setwd(this.dir)
 }
 
-
 hp_data = read_csv('data/domc_order_difficulty/Full Responses After Exclusions.csv')
 
 hp_clean = hp_data %>% filter(item_type == 'domc', item_component_type == 'domc_option') %>% group_by(delivery_id, item_id) %>% mutate(option_order = paste0(option_presented, collapse = ""))
 
+hp_clean_mc = hp_data %>% filter(item_type == 'multiple_choice', item_component_type == 'final') %>% group_by(delivery_id, item_id) %>% mutate(option_order = paste0(option_presented, collapse = ""))
+hp_clean_mc$survey = ifelse(grepl("Survey",hp_clean_mc$item_id),1,0)
+hp_clean_mc = hp_clean_mc %>% filter(survey == 0)
+hp_clean_mc$item_number = as.numeric(str_extract(hp_clean_mc$item_id, "[0-9]+"))
+
 hp_summary = hp_clean %>% group_by(delivery_id, item_id) %>% summarize(item_total_seconds = max(item_total_seconds), item_order = max(option_order), score = max(score)) %>% group_by(delivery_id, item_id) %>% mutate(order = paste(sort(unlist(strsplit(as.character(item_order), ""))), collapse = "")) 
 
+hp_summary_mc = hp_clean_mc %>% group_by(delivery_id, item_id) %>% summarize(item_total_seconds = max(item_total_seconds), item_order = max(option_order), score = max(score)) %>% group_by(delivery_id, item_id) %>% mutate(order = paste(sort(unlist(strsplit(as.character(item_order), ""))), collapse = "")) 
+
 hp_items = hp_summary %>% group_by(item_id, order) %>% summarize(p_value = mean(score), count = n())
+hp_items_mc = hp_summary_mc %>% group_by(item_id, item_order) %>% summarize(p_value = mean(score), count = n())
+
+all_items = bind_rows(hp_items, hp_items_mc)
+all_items$item_type = ifelse(is.na(all_items$item_order), 'DOMC', "MC")
+all_items$item_number = as.numeric(str_extract(all_items$item_id, "[0-9]+"))
 
 ```
 
@@ -34,10 +46,22 @@ hp_items = hp_summary %>% group_by(item_id, order) %>% summarize(p_value = mean(
 tenb_v1 = hp_items %>% filter(item_id == '10B_v1')
 kable(tenb_v1)
 ```
+
 ### Histogram
 ```{r results='hide', message=FALSE, warning=FALSE}
 theme_update(plot.title = element_text(hjust = 0.5))
 ggplot(tenb_v1, aes(x=p_value)) + geom_histogram(binwidth=.01) + labs(title = "Item10B_v1") 
+```
+## Item 10A_v1
+
+```{r, message=FALSE, warning=FALSE}
+tena_v1 = hp_items_mc %>% filter(item_id == '10A_v1')
+kable(tena_v1)
+```
+### Histogram
+```{r results='hide', message=FALSE, warning=FALSE}
+theme_update(plot.title = element_text(hjust = 0.5))
+ggplot(tena_v1, aes(x=p_value)) + geom_histogram(binwidth=.01) + labs(title = "Item10A_v1") 
 ```
 
 ## Item 14b_v1
@@ -50,6 +74,18 @@ kable(fourteenb_v1, format = "markdown")
 
 ```{r results='hide', message=FALSE, warning=FALSE}
 ggplot(fourteenb_v1, aes(x=p_value)) + geom_histogram(binwidth=.01) + labs(title = "Item14B_v1")+ xlim(-.01,1) + ylim(0,20)
+```
+
+## Item 14a_v1
+
+```{r, message=FALSE, warning=FALSE}
+fourteenb_v1 = hp_items_mc %>% filter(item_id == '14A_v1')
+kable(fourteenb_v1, format = "markdown")
+```
+### Histogram
+
+```{r results='hide', message=FALSE, warning=FALSE}
+ggplot(fourteenb_v1, aes(x=p_value)) + geom_histogram(binwidth=.01) + labs(title = "Item14A_v1")+ xlim(-.01,1) + ylim(0,20)
 ```
 
 ## Remove correct response
@@ -65,6 +101,11 @@ It cleans things up a bit but it is important to recognize what is going on.
 hp_summary$order_no_cr = gsub('0','',hp_summary$order)
 hp_summary$order_no_cr = ifelse(hp_summary$order_no_cr == '', '0', hp_summary$order_no_cr)
 hp_items_no_cr = hp_summary %>% group_by(item_id, order_no_cr) %>% summarize(p_value = mean(score), count = n())
+
+all_items = bind_rows(hp_items_no_cr, hp_items_mc)
+all_items$item_type = ifelse(is.na(all_items$item_order), 'DOMC', "MC")
+all_items$item_number = as.numeric(str_extract(all_items$item_id, "[0-9]+"))
+
 
 ```
 
@@ -89,6 +130,11 @@ fourteenb_v1 = hp_items_no_cr %>% filter(item_id == '14B_v1')
 kable(fourteenb_v1)
 ```
 
+```{r}
+theme_update(plot.title = element_text(hjust = 0.5))
+ggplot(all_items %>% filter(item_number == 14), aes(x=p_value, color=item_type)) + geom_histogram(fill='white', binwidth=.01, position='identity', alpha=0) + labs(title = "Item14") + xlim(-.01,1) + geom_density()
+```
+
 ### Histogram
 
 ```{r results='hide', message=FALSE, warning=FALSE}
@@ -100,8 +146,7 @@ ggplot(fourteenb_v1, aes(x=p_value)) + geom_histogram(binwidth=.01) + labs(title
 ```{r, fig.height = 15, fig.width = 7, results='hide', message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(fig.width=12, fig.height=20) 
 
-ggplot(hp_items_no_cr, aes(x=p_value)) + geom_histogram(binwidth=.01) + labs(title = "All Items") + xlim(-.01,1) + facet_wrap(~item_id, ncol=3)
-
+ggplot(all_items, aes(x=p_value, color=item_type)) + geom_histogram(fill='white', binwidth=.01, position='identity', alpha=0) + xlim(-.01,1) + geom_density() + labs(title = "All Items") + xlim(-.01,1) +ylim(0,20) + facet_wrap(~item_number, ncol=3)
 
 ```
 
