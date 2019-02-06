@@ -1,11 +1,11 @@
 # DOMC Difficulty Variance
 
 ## Initial Run
-Here is a document showing the results of item families derived from a single DOMC stem. Essentially we treat each possible combination of options as a different question just to see the amount of variance from a single DOMC stem.
+Here is a document showing the results of item families derived from a single DOMC stem. Essentially we treat each possible combination of options as a differential question just to see the amount of variance from a single DOMC stem.
 
 In this first run we treat each different option combination as a different item, including those for people who never saw the correct response (making all these p-values 0)
 
-```{r results='hide', message=FALSE, warning=FALSE}
+```{r results='hide', message=FALSE, warning=FALSE, echo=FALSE}
 library(dplyr)
 library(readr)
 library(knitr)
@@ -104,5 +104,6 @@ ggplot(hp_items_no_cr, aes(x=p_value)) + geom_histogram(binwidth=.01) + labs(tit
 
 
 ```
+
 
 

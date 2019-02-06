@@ -109,3 +109,5 @@ venv.bak/
 
 .Rproj.user
 smartitem.Rproj
+.dropbox
+desktop.ini

@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>8 Simulation 2 | SMRT</title>
+  <meta name="description" content="This is a book describing smart items and a compilation of research which can support their use.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="8 Simulation 2 | SMRT" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a book describing smart items and a compilation of research which can support their use." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Simulation 2 | SMRT" />
+  
+  <meta name="twitter:description" content="This is a book describing smart items and a compilation of research which can support their use." />
+  
+
+<meta name="author" content="Chris Foster">
+
+
+<meta name="date" content="2019-02-06">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="simulation-1.html">
+<link rel="next" href="future-simulations.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Smart items</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html"><i class="fa fa-check"></i><b>2</b> Introduction to Smart Items</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html#purpose-of-building-smart-items"><i class="fa fa-check"></i><b>2.1</b> Purpose of Building Smart Items</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html#smart-item-logic"><i class="fa fa-check"></i><b>2.2</b> Smart Item Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html"><i class="fa fa-check"></i><b>3</b> DOMC Difficulty Variance</a><ul>
+<li class="chapter" data-level="3.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#initial-run"><i class="fa fa-check"></i><b>3.1</b> Initial Run</a></li>
+<li class="chapter" data-level="3.2" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-10b_v1"><i class="fa fa-check"></i><b>3.2</b> Item 10B_v1</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram"><i class="fa fa-check"></i><b>3.2.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-14b_v1"><i class="fa fa-check"></i><b>3.3</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-1"><i class="fa fa-check"></i><b>3.3.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#remove-correct-response"><i class="fa fa-check"></i><b>3.4</b> Remove correct response</a></li>
+<li class="chapter" data-level="3.5" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-10b_v1-1"><i class="fa fa-check"></i><b>3.5</b> Item 10B_v1</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-2"><i class="fa fa-check"></i><b>3.5.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-14b_v1-1"><i class="fa fa-check"></i><b>3.6</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-3"><i class="fa fa-check"></i><b>3.6.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#all-item-plots"><i class="fa fa-check"></i><b>3.7</b> All Item Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="domc-difficulty-factors.html"><a href="domc-difficulty-factors.html"><i class="fa fa-check"></i><b>4</b> DOMC Difficulty Factors</a></li>
+<li class="chapter" data-level="5" data-path="recall-vs-deduction.html"><a href="recall-vs-deduction.html"><i class="fa fa-check"></i><b>5</b> Recall VS Deduction</a><ul>
+<li class="chapter" data-level="5.1" data-path="recall-vs-deduction.html"><a href="recall-vs-deduction.html#some-graphs"><i class="fa fa-check"></i><b>5.1</b> Some Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="whocares.html"><a href="whocares.html"><i class="fa fa-check"></i><b>6</b> whocares</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#generating-data"><i class="fa fa-check"></i><b>7.1</b> Generating Data</a></li>
+<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#test-differences"><i class="fa fa-check"></i><b>7.2</b> Test Differences</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a></li>
+<li class="chapter" data-level="9" data-path="future-simulations.html"><a href="future-simulations.html"><i class="fa fa-check"></i><b>9</b> Future Simulations</a></li>
+<li class="divider"></li>
+<li><a href="https://caveon.com" target="blank">Caveon</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SMRT</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="simulation-2" class="section level1">
+<h1><span class="header-section-number">8</span> Simulation 2</h1>
+<p>The first simulation showed that increasing the number of items on the random test resulted in more tests being equivilent in difficulty. However, one important part of many tests is evaluating what happens with the cut score decision. Tests arent 100% precise and their inprecision is captured in the reliability statistic. If a person took the test again tehy would not get the exact same score but hopefully get a similar score. However, the differences in the two different test scores may cross over the cut score decision so in one case they may pass and in another they may fail. When tests can also vary in difficulty it is possible that the change in the difficulty of hte test will result in larger numbers of people getting different cut score classifications because they recieved a different difficulty test.</p>
+<p>In this second simulation we are going to expand on the data from the first simulation. We generated the data in the exact same way with one exception: we added in a modified angoff cut score to each of the 5000 items. This angoff cut score was generated by simply sampling a value from a normal distribution with a mean 15% easier than the item itself and a standard deviation of .05. So if an item had a p-value of .5, the cut score for the item would be sampled from a normal distribution from mean .65 and a standard deviation of .05. This made a test where the cut score was slightly lower than the average difficulty of the items on the test.</p>
+<p>Each simulated examinee then took the random tests of varying length and the fixed form test and whether they passed each test based on the items in that test. If they got a different cut score decision on the fixed form test than the random test then there was a cut score classification change. We took extra care to look at cut score classification changes when an examinee passed the fixed test, recieved a harder random test and did not pass. We then evaluated the percent of people with classification changes and the precent of people with classification changes when given a harder random form test.</p>
+<p>The results are reported in the table below. There are several important things to note in the table.</p>
+<ol style="list-style-type: decimal">
+<li><p>The number of people who get a similar difficulty test but a different cut score classification is not zero.</p></li>
+<li><p>The number of people who recieve a similar difficulty test but a different cut score classification goes down as the number of items increases.</p></li>
+<li><p>The same is true for people with a different difficulty test. As the number of items increased, the number of people getting a different cut score classification and a different difficulty test shrinks</p></li>
+<li><p>For around a random test around similar length as the fixed test only about .2% of people are recieving a different difficuly test AND also getting a different cut score classification. It is important to not that around 7% of people who got a simialr difficulty test got different cut score classifications. When considering unfairness on a test where a cut score decision is used only a very small percentage of people get both a different difficulty of test and a different cut score classification.</p></li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(item_class_change)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">item_count</th>
+<th align="right">test_change_difficulty</th>
+<th align="right">decision_change</th>
+<th align="right">count</th>
+<th align="right">freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">570</td>
+<td align="right">0.5705706</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">118</td>
+<td align="right">0.1181181</td>
+</tr>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">252</td>
+<td align="right">0.2522523</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">59</td>
+<td align="right">0.0590591</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">617</td>
+<td align="right">0.6176176</td>
+</tr>
+<tr class="even">
+<td align="right">11</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">108</td>
+<td align="right">0.1081081</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">215</td>
+<td align="right">0.2152152</td>
+</tr>
+<tr class="even">
+<td align="right">11</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">59</td>
+<td align="right">0.0590591</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">612</td>
+<td align="right">0.6126126</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">110</td>
+<td align="right">0.1101101</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">218</td>
+<td align="right">0.2182182</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">59</td>
+<td align="right">0.0590591</td>
+</tr>
+<tr class="odd">
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">663</td>
+<td align="right">0.6636637</td>
+</tr>
+<tr class="even">
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">105</td>
+<td align="right">0.1051051</td>
+</tr>
+<tr class="odd">
+<td align="right">13</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">191</td>
+<td align="right">0.1911912</td>
+</tr>
+<tr class="even">
+<td align="right">13</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">40</td>
+<td align="right">0.0400400</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">661</td>
+<td align="right">0.6616617</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">116</td>
+<td align="right">0.1161161</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">179</td>
+<td align="right">0.1791792</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">43</td>
+<td align="right">0.0430430</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">700</td>
+<td align="right">0.7007007</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">110</td>
+<td align="right">0.1101101</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">156</td>
+<td align="right">0.1561562</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">33</td>
+<td align="right">0.0330330</td>
+</tr>
+<tr class="odd">
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">741</td>
+<td align="right">0.7417417</td>
+</tr>
+<tr class="even">
+<td align="right">16</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">104</td>
+<td align="right">0.1041041</td>
+</tr>
+<tr class="odd">
+<td align="right">16</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">131</td>
+<td align="right">0.1311311</td>
+</tr>
+<tr class="even">
+<td align="right">16</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">0.0230230</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">740</td>
+<td align="right">0.7407407</td>
+</tr>
+<tr class="even">
+<td align="right">17</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">83</td>
+<td align="right">0.0830831</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">153</td>
+<td align="right">0.1531532</td>
+</tr>
+<tr class="even">
+<td align="right">17</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">0.0230230</td>
+</tr>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">750</td>
+<td align="right">0.7507508</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">92</td>
+<td align="right">0.0920921</td>
+</tr>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">135</td>
+<td align="right">0.1351351</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">22</td>
+<td align="right">0.0220220</td>
+</tr>
+<tr class="odd">
+<td align="right">19</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">755</td>
+<td align="right">0.7557558</td>
+</tr>
+<tr class="even">
+<td align="right">19</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">89</td>
+<td align="right">0.0890891</td>
+</tr>
+<tr class="odd">
+<td align="right">19</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">129</td>
+<td align="right">0.1291291</td>
+</tr>
+<tr class="even">
+<td align="right">19</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">26</td>
+<td align="right">0.0260260</td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">760</td>
+<td align="right">0.7607608</td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">98</td>
+<td align="right">0.0980981</td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">124</td>
+<td align="right">0.1241241</td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">17</td>
+<td align="right">0.0170170</td>
+</tr>
+<tr class="odd">
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">780</td>
+<td align="right">0.7807808</td>
+</tr>
+<tr class="even">
+<td align="right">21</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">104</td>
+<td align="right">0.1041041</td>
+</tr>
+<tr class="odd">
+<td align="right">21</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">99</td>
+<td align="right">0.0990991</td>
+</tr>
+<tr class="even">
+<td align="right">21</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">16</td>
+<td align="right">0.0160160</td>
+</tr>
+<tr class="odd">
+<td align="right">22</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">782</td>
+<td align="right">0.7827828</td>
+</tr>
+<tr class="even">
+<td align="right">22</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">111</td>
+<td align="right">0.1111111</td>
+</tr>
+<tr class="odd">
+<td align="right">22</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">92</td>
+<td align="right">0.0920921</td>
+</tr>
+<tr class="even">
+<td align="right">22</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">14</td>
+<td align="right">0.0140140</td>
+</tr>
+<tr class="odd">
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">782</td>
+<td align="right">0.7827828</td>
+</tr>
+<tr class="even">
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">104</td>
+<td align="right">0.1041041</td>
+</tr>
+<tr class="odd">
+<td align="right">23</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">95</td>
+<td align="right">0.0950951</td>
+</tr>
+<tr class="even">
+<td align="right">23</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">18</td>
+<td align="right">0.0180180</td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">832</td>
+<td align="right">0.8328328</td>
+</tr>
+<tr class="even">
+<td align="right">24</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">94</td>
+<td align="right">0.0940941</td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">64</td>
+<td align="right">0.0640641</td>
+</tr>
+<tr class="even">
+<td align="right">24</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">0.0090090</td>
+</tr>
+<tr class="odd">
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">807</td>
+<td align="right">0.8078078</td>
+</tr>
+<tr class="even">
+<td align="right">25</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">101</td>
+<td align="right">0.1011011</td>
+</tr>
+<tr class="odd">
+<td align="right">25</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">79</td>
+<td align="right">0.0790791</td>
+</tr>
+<tr class="even">
+<td align="right">25</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="right">0.0120120</td>
+</tr>
+<tr class="odd">
+<td align="right">26</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">836</td>
+<td align="right">0.8368368</td>
+</tr>
+<tr class="even">
+<td align="right">26</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">95</td>
+<td align="right">0.0950951</td>
+</tr>
+<tr class="odd">
+<td align="right">26</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">56</td>
+<td align="right">0.0560561</td>
+</tr>
+<tr class="even">
+<td align="right">26</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">12</td>
+<td align="right">0.0120120</td>
+</tr>
+<tr class="odd">
+<td align="right">27</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">833</td>
+<td align="right">0.8338338</td>
+</tr>
+<tr class="even">
+<td align="right">27</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">92</td>
+<td align="right">0.0920921</td>
+</tr>
+<tr class="odd">
+<td align="right">27</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">63</td>
+<td align="right">0.0630631</td>
+</tr>
+<tr class="even">
+<td align="right">27</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">11</td>
+<td align="right">0.0110110</td>
+</tr>
+<tr class="odd">
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">859</td>
+<td align="right">0.8598599</td>
+</tr>
+<tr class="even">
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">80</td>
+<td align="right">0.0800801</td>
+</tr>
+<tr class="odd">
+<td align="right">28</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">45</td>
+<td align="right">0.0450450</td>
+</tr>
+<tr class="even">
+<td align="right">28</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">15</td>
+<td align="right">0.0150150</td>
+</tr>
+<tr class="odd">
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">869</td>
+<td align="right">0.8698699</td>
+</tr>
+<tr class="even">
+<td align="right">29</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">80</td>
+<td align="right">0.0800801</td>
+</tr>
+<tr class="odd">
+<td align="right">29</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">46</td>
+<td align="right">0.0460460</td>
+</tr>
+<tr class="even">
+<td align="right">29</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">0.0040040</td>
+</tr>
+<tr class="odd">
+<td align="right">30</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">851</td>
+<td align="right">0.8518519</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">99</td>
+<td align="right">0.0990991</td>
+</tr>
+<tr class="odd">
+<td align="right">30</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">40</td>
+<td align="right">0.0400400</td>
+</tr>
+<tr class="even">
+<td align="right">30</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">0.0090090</td>
+</tr>
+<tr class="odd">
+<td align="right">31</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">862</td>
+<td align="right">0.8628629</td>
+</tr>
+<tr class="even">
+<td align="right">31</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">96</td>
+<td align="right">0.0960961</td>
+</tr>
+<tr class="odd">
+<td align="right">31</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">40</td>
+<td align="right">0.0400400</td>
+</tr>
+<tr class="even">
+<td align="right">31</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.0010010</td>
+</tr>
+<tr class="odd">
+<td align="right">32</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">887</td>
+<td align="right">0.8878879</td>
+</tr>
+<tr class="even">
+<td align="right">32</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">77</td>
+<td align="right">0.0770771</td>
+</tr>
+<tr class="odd">
+<td align="right">32</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">29</td>
+<td align="right">0.0290290</td>
+</tr>
+<tr class="even">
+<td align="right">32</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">6</td>
+<td align="right">0.0060060</td>
+</tr>
+<tr class="odd">
+<td align="right">33</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">879</td>
+<td align="right">0.8798799</td>
+</tr>
+<tr class="even">
+<td align="right">33</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">83</td>
+<td align="right">0.0830831</td>
+</tr>
+<tr class="odd">
+<td align="right">33</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">34</td>
+<td align="right">0.0340340</td>
+</tr>
+<tr class="even">
+<td align="right">33</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.0030030</td>
+</tr>
+<tr class="odd">
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">882</td>
+<td align="right">0.8828829</td>
+</tr>
+<tr class="even">
+<td align="right">34</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">91</td>
+<td align="right">0.0910911</td>
+</tr>
+<tr class="odd">
+<td align="right">34</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">25</td>
+<td align="right">0.0250250</td>
+</tr>
+<tr class="even">
+<td align="right">34</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.0010010</td>
+</tr>
+<tr class="odd">
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">877</td>
+<td align="right">0.8778779</td>
+</tr>
+<tr class="even">
+<td align="right">35</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">88</td>
+<td align="right">0.0880881</td>
+</tr>
+<tr class="odd">
+<td align="right">35</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">29</td>
+<td align="right">0.0290290</td>
+</tr>
+<tr class="even">
+<td align="right">35</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">0.0050050</td>
+</tr>
+<tr class="odd">
+<td align="right">36</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">882</td>
+<td align="right">0.8828829</td>
+</tr>
+<tr class="even">
+<td align="right">36</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">80</td>
+<td align="right">0.0800801</td>
+</tr>
+<tr class="odd">
+<td align="right">36</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">30</td>
+<td align="right">0.0300300</td>
+</tr>
+<tr class="even">
+<td align="right">36</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">0.0070070</td>
+</tr>
+<tr class="odd">
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">902</td>
+<td align="right">0.9029029</td>
+</tr>
+<tr class="even">
+<td align="right">37</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">72</td>
+<td align="right">0.0720721</td>
+</tr>
+<tr class="odd">
+<td align="right">37</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">22</td>
+<td align="right">0.0220220</td>
+</tr>
+<tr class="even">
+<td align="right">37</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.0030030</td>
+</tr>
+<tr class="odd">
+<td align="right">38</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">879</td>
+<td align="right">0.8798799</td>
+</tr>
+<tr class="even">
+<td align="right">38</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">97</td>
+<td align="right">0.0970971</td>
+</tr>
+<tr class="odd">
+<td align="right">38</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">23</td>
+<td align="right">0.0230230</td>
+</tr>
+<tr class="even">
+<td align="right">39</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">900</td>
+<td align="right">0.9009009</td>
+</tr>
+<tr class="odd">
+<td align="right">39</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">86</td>
+<td align="right">0.0860861</td>
+</tr>
+<tr class="even">
+<td align="right">39</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">13</td>
+<td align="right">0.0130130</td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">909</td>
+<td align="right">0.9099099</td>
+</tr>
+<tr class="even">
+<td align="right">40</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">80</td>
+<td align="right">0.0800801</td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">10</td>
+<td align="right">0.0100100</td>
+</tr>
+<tr class="even">
+<td align="right">41</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">908</td>
+<td align="right">0.9089089</td>
+</tr>
+<tr class="odd">
+<td align="right">41</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">77</td>
+<td align="right">0.0770771</td>
+</tr>
+<tr class="even">
+<td align="right">41</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">14</td>
+<td align="right">0.0140140</td>
+</tr>
+<tr class="odd">
+<td align="right">42</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">907</td>
+<td align="right">0.9079079</td>
+</tr>
+<tr class="even">
+<td align="right">42</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">78</td>
+<td align="right">0.0780781</td>
+</tr>
+<tr class="odd">
+<td align="right">42</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">13</td>
+<td align="right">0.0130130</td>
+</tr>
+<tr class="even">
+<td align="right">42</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.0010010</td>
+</tr>
+<tr class="odd">
+<td align="right">43</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">901</td>
+<td align="right">0.9019019</td>
+</tr>
+<tr class="even">
+<td align="right">43</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">85</td>
+<td align="right">0.0850851</td>
+</tr>
+<tr class="odd">
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">11</td>
+<td align="right">0.0110110</td>
+</tr>
+<tr class="even">
+<td align="right">43</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.0020020</td>
+</tr>
+<tr class="odd">
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">913</td>
+<td align="right">0.9139139</td>
+</tr>
+<tr class="even">
+<td align="right">44</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">76</td>
+<td align="right">0.0760761</td>
+</tr>
+<tr class="odd">
+<td align="right">44</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">0.0080080</td>
+</tr>
+<tr class="even">
+<td align="right">44</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">0.0020020</td>
+</tr>
+<tr class="odd">
+<td align="right">45</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">914</td>
+<td align="right">0.9149149</td>
+</tr>
+<tr class="even">
+<td align="right">45</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">76</td>
+<td align="right">0.0760761</td>
+</tr>
+<tr class="odd">
+<td align="right">45</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">8</td>
+<td align="right">0.0080080</td>
+</tr>
+<tr class="even">
+<td align="right">45</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.0010010</td>
+</tr>
+<tr class="odd">
+<td align="right">46</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">915</td>
+<td align="right">0.9159159</td>
+</tr>
+<tr class="even">
+<td align="right">46</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">76</td>
+<td align="right">0.0760761</td>
+</tr>
+<tr class="odd">
+<td align="right">46</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">7</td>
+<td align="right">0.0070070</td>
+</tr>
+<tr class="even">
+<td align="right">46</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.0010010</td>
+</tr>
+<tr class="odd">
+<td align="right">47</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">923</td>
+<td align="right">0.9239239</td>
+</tr>
+<tr class="even">
+<td align="right">47</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">67</td>
+<td align="right">0.0670671</td>
+</tr>
+<tr class="odd">
+<td align="right">47</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0.0060060</td>
+</tr>
+<tr class="even">
+<td align="right">47</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">0.0030030</td>
+</tr>
+<tr class="odd">
+<td align="right">48</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">903</td>
+<td align="right">0.9039039</td>
+</tr>
+<tr class="even">
+<td align="right">48</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">91</td>
+<td align="right">0.0910911</td>
+</tr>
+<tr class="odd">
+<td align="right">48</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">5</td>
+<td align="right">0.0050050</td>
+</tr>
+<tr class="even">
+<td align="right">49</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">916</td>
+<td align="right">0.9169169</td>
+</tr>
+<tr class="odd">
+<td align="right">49</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">73</td>
+<td align="right">0.0730731</td>
+</tr>
+<tr class="even">
+<td align="right">49</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">9</td>
+<td align="right">0.0090090</td>
+</tr>
+<tr class="odd">
+<td align="right">49</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0.0010010</td>
+</tr>
+<tr class="even">
+<td align="right">50</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">915</td>
+<td align="right">0.9159159</td>
+</tr>
+<tr class="odd">
+<td align="right">50</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">83</td>
+<td align="right">0.0830831</td>
+</tr>
+<tr class="even">
+<td align="right">50</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.0010010</td>
+</tr>
+<tr class="odd">
+<td align="right">51</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">920</td>
+<td align="right">0.9209209</td>
+</tr>
+<tr class="even">
+<td align="right">51</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">76</td>
+<td align="right">0.0760761</td>
+</tr>
+<tr class="odd">
+<td align="right">51</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0.0030030</td>
+</tr>
+<tr class="even">
+<td align="right">52</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">920</td>
+<td align="right">0.9209209</td>
+</tr>
+<tr class="odd">
+<td align="right">52</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">77</td>
+<td align="right">0.0770771</td>
+</tr>
+<tr class="even">
+<td align="right">52</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0020020</td>
+</tr>
+<tr class="odd">
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">916</td>
+<td align="right">0.9169169</td>
+</tr>
+<tr class="even">
+<td align="right">53</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">81</td>
+<td align="right">0.0810811</td>
+</tr>
+<tr class="odd">
+<td align="right">53</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0020020</td>
+</tr>
+<tr class="even">
+<td align="right">54</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">932</td>
+<td align="right">0.9329329</td>
+</tr>
+<tr class="odd">
+<td align="right">54</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">65</td>
+<td align="right">0.0650651</td>
+</tr>
+<tr class="even">
+<td align="right">54</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0020020</td>
+</tr>
+<tr class="odd">
+<td align="right">55</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">941</td>
+<td align="right">0.9419419</td>
+</tr>
+<tr class="even">
+<td align="right">55</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">56</td>
+<td align="right">0.0560561</td>
+</tr>
+<tr class="odd">
+<td align="right">55</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0020020</td>
+</tr>
+<tr class="even">
+<td align="right">56</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">940</td>
+<td align="right">0.9409409</td>
+</tr>
+<tr class="odd">
+<td align="right">56</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">57</td>
+<td align="right">0.0570571</td>
+</tr>
+<tr class="even">
+<td align="right">56</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0.0020020</td>
+</tr>
+<tr class="odd">
+<td align="right">57</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">927</td>
+<td align="right">0.9279279</td>
+</tr>
+<tr class="even">
+<td align="right">57</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">72</td>
+<td align="right">0.0720721</td>
+</tr>
+<tr class="odd">
+<td align="right">58</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">943</td>
+<td align="right">0.9439439</td>
+</tr>
+<tr class="even">
+<td align="right">58</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">53</td>
+<td align="right">0.0530531</td>
+</tr>
+<tr class="odd">
+<td align="right">58</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0.0030030</td>
+</tr>
+<tr class="even">
+<td align="right">59</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">922</td>
+<td align="right">0.9229229</td>
+</tr>
+<tr class="odd">
+<td align="right">59</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">77</td>
+<td align="right">0.0770771</td>
+</tr>
+</tbody>
+</table>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="simulation-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="future-simulations.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["smartitem.pdf", "smartitem.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

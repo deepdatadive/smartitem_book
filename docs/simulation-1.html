@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>7 Simulation 1 | SMRT</title>
+  <meta name="description" content="This is a book describing smart items and a compilation of research which can support their use.">
+  <meta name="generator" content="bookdown  and GitBook 2.6.7">
+
+  <meta property="og:title" content="7 Simulation 1 | SMRT" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a book describing smart items and a compilation of research which can support their use." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7 Simulation 1 | SMRT" />
+  
+  <meta name="twitter:description" content="This is a book describing smart items and a compilation of research which can support their use." />
+  
+
+<meta name="author" content="Chris Foster">
+
+
+<meta name="date" content="2019-02-06">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="references.html">
+<link rel="next" href="simulation-2.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Smart items</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Preface</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html"><i class="fa fa-check"></i><b>2</b> Introduction to Smart Items</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html#purpose-of-building-smart-items"><i class="fa fa-check"></i><b>2.1</b> Purpose of Building Smart Items</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-smart-items.html"><a href="introduction-to-smart-items.html#smart-item-logic"><i class="fa fa-check"></i><b>2.2</b> Smart Item Logic</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html"><i class="fa fa-check"></i><b>3</b> DOMC Difficulty Variance</a><ul>
+<li class="chapter" data-level="3.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#initial-run"><i class="fa fa-check"></i><b>3.1</b> Initial Run</a></li>
+<li class="chapter" data-level="3.2" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-10b_v1"><i class="fa fa-check"></i><b>3.2</b> Item 10B_v1</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram"><i class="fa fa-check"></i><b>3.2.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-14b_v1"><i class="fa fa-check"></i><b>3.3</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-1"><i class="fa fa-check"></i><b>3.3.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#remove-correct-response"><i class="fa fa-check"></i><b>3.4</b> Remove correct response</a></li>
+<li class="chapter" data-level="3.5" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-10b_v1-1"><i class="fa fa-check"></i><b>3.5</b> Item 10B_v1</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-2"><i class="fa fa-check"></i><b>3.5.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.6" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#item-14b_v1-1"><i class="fa fa-check"></i><b>3.6</b> Item 14b_v1</a><ul>
+<li class="chapter" data-level="3.6.1" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#histogram-3"><i class="fa fa-check"></i><b>3.6.1</b> Histogram</a></li>
+</ul></li>
+<li class="chapter" data-level="3.7" data-path="domc-difficulty-variance.html"><a href="domc-difficulty-variance.html#all-item-plots"><i class="fa fa-check"></i><b>3.7</b> All Item Plots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="domc-difficulty-factors.html"><a href="domc-difficulty-factors.html"><i class="fa fa-check"></i><b>4</b> DOMC Difficulty Factors</a></li>
+<li class="chapter" data-level="5" data-path="recall-vs-deduction.html"><a href="recall-vs-deduction.html"><i class="fa fa-check"></i><b>5</b> Recall VS Deduction</a><ul>
+<li class="chapter" data-level="5.1" data-path="recall-vs-deduction.html"><a href="recall-vs-deduction.html#some-graphs"><i class="fa fa-check"></i><b>5.1</b> Some Graphs</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="whocares.html"><a href="whocares.html"><i class="fa fa-check"></i><b>6</b> whocares</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="chapter" data-level="7" data-path="simulation-1.html"><a href="simulation-1.html"><i class="fa fa-check"></i><b>7</b> Simulation 1</a><ul>
+<li class="chapter" data-level="7.1" data-path="simulation-1.html"><a href="simulation-1.html#generating-data"><i class="fa fa-check"></i><b>7.1</b> Generating Data</a></li>
+<li class="chapter" data-level="7.2" data-path="simulation-1.html"><a href="simulation-1.html#test-differences"><i class="fa fa-check"></i><b>7.2</b> Test Differences</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="simulation-2.html"><a href="simulation-2.html"><i class="fa fa-check"></i><b>8</b> Simulation 2</a></li>
+<li class="chapter" data-level="9" data-path="future-simulations.html"><a href="future-simulations.html"><i class="fa fa-check"></i><b>9</b> Future Simulations</a></li>
+<li class="divider"></li>
+<li><a href="https://caveon.com" target="blank">Caveon</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SMRT</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="simulation-1" class="section level1">
+<h1><span class="header-section-number">7</span> Simulation 1</h1>
+<p>In this chapter we will be talking about different simualtions run to address potential issues with smart items. To begin we are going to look at how test composition and difficulty change when people are administered random items from an item pool instead of a fixed form test.</p>
+<div id="generating-data" class="section level2">
+<h2><span class="header-section-number">7.1</span> Generating Data</h2>
+<p>We generated a bank of 5000 items using the 2 prameter logistic model. The item difficulties were sampled from a normal distribution with a mean 0 and standard deviation of 1. The discrimination parameter was sampled from a normal distribution with mean 1 and a standard deviation of .05.</p>
+<p>We then generated 100,000 examinees and had each examinee take tests comprised of random items from length 10 to 60 In addition to 50 random forms, each examinee took a fixed form test comprised of the same 40 items for each of the 100,000 examinees.</p>
+</div>
+<div id="test-differences" class="section level2">
+<h2><span class="header-section-number">7.2</span> Test Differences</h2>
+<p>It was important to come up with a way to determine if the random form was of differing difficulty than the 40 item fixed form test. How we did this was by computing the standard error of test difficulty using the p-values for items on the fixed form test. This was used to compute a confidence interval for the test difficulty. The standard error was st_dev/sqrt(test_length) = .028. Using a 95% confidence interval we see that the confidence interval for the difficulty of hte fixed form test is from .44 to .55. Now, whenever a candidate took a random form test we compared the difficulty of that test to the confidence interval above. If the difficulty of their test fell within the confidence interval we decided that this meant the random form test was no different in diffculty from the fixed form test.</p>
+<p>There were several different ways of determining if a person received tests of different difficulties. The above method is simply one of the different ways of doing so.</p>
+<p>Finally, we computed the percent of individuals at each item count that had a similar or different difficulty test. As we can see in the following table. When the random test was only 10 items long, 62% of candidates had a test that was either harder or easier than the 40 item fixed test. However, by the time the random test was 40 items long only 2% of people had a test that was either harder or easier than the fixed form test. As the number of items on the random test increased, the probability of it being a different diffculty test decreased.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">kable</span>(item_count_group)</code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">item_count</th>
+<th align="right">test_change_difficulty</th>
+<th align="right">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">0.6226226</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">11</td>
+<td align="right">0.5485485</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">0.5545546</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">13</td>
+<td align="right">0.4624625</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">0.4444444</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">0.3783784</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">16</td>
+<td align="right">0.3083083</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">17</td>
+<td align="right">0.3523524</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">0.3143143</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">19</td>
+<td align="right">0.3103103</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">0.2822823</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">21</td>
+<td align="right">0.2302302</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">22</td>
+<td align="right">0.2122122</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">23</td>
+<td align="right">0.2262262</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="right">0.1461461</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">25</td>
+<td align="right">0.1821822</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">26</td>
+<td align="right">0.1361361</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">27</td>
+<td align="right">0.1481481</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">28</td>
+<td align="right">0.1201201</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">29</td>
+<td align="right">0.1001001</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">30</td>
+<td align="right">0.0980981</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">31</td>
+<td align="right">0.0820821</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">32</td>
+<td align="right">0.0700701</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">33</td>
+<td align="right">0.0740741</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">34</td>
+<td align="right">0.0520521</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">35</td>
+<td align="right">0.0680681</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">36</td>
+<td align="right">0.0740741</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">37</td>
+<td align="right">0.0500501</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">38</td>
+<td align="right">0.0460460</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">39</td>
+<td align="right">0.0260260</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">40</td>
+<td align="right">0.0200200</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">41</td>
+<td align="right">0.0280280</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">42</td>
+<td align="right">0.0280280</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">43</td>
+<td align="right">0.0260260</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">44</td>
+<td align="right">0.0200200</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">45</td>
+<td align="right">0.0180180</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">46</td>
+<td align="right">0.0160160</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">47</td>
+<td align="right">0.0180180</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">48</td>
+<td align="right">0.0100100</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">49</td>
+<td align="right">0.0200200</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">50</td>
+<td align="right">0.0020020</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">51</td>
+<td align="right">0.0060060</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">52</td>
+<td align="right">0.0040040</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">53</td>
+<td align="right">0.0040040</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">54</td>
+<td align="right">0.0040040</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">55</td>
+<td align="right">0.0040040</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">56</td>
+<td align="right">0.0040040</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">57</td>
+<td align="right">0.0000000</td>
+<td align="right">999</td>
+</tr>
+<tr class="odd">
+<td align="right">58</td>
+<td align="right">0.0060060</td>
+<td align="right">999</td>
+</tr>
+<tr class="even">
+<td align="right">59</td>
+<td align="right">0.0000000</td>
+<td align="right">999</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="references.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="simulation-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["smartitem.pdf", "smartitem.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
